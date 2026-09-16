@@ -1,0 +1,780 @@
+{
+  "version": "2026-09-16",
+  "note": "Known AI platforms with the evidence that reveals them on a machine and the route to connect each one. Adding a platform is a change to this file. Routes with verified=false are written from vendor documentation and have not been exercised through AI Hub yet; the card says so. Values of keys are never read by the scanner; only variable names.",
+  "platforms": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "category": "chat",
+      "description": "GPT models over the OpenAI API.",
+      "aliases": ["chatgpt api"],
+      "evidence": { "envVars": ["OPENAI_API_KEY"], "hosts": ["api.openai.com"], "packages": ["openai", "@openai/openai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.openai.com/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "category": "chat",
+      "description": "Claude models over the Anthropic Messages API.",
+      "evidence": { "envVars": ["ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN"], "hosts": ["api.anthropic.com"], "packages": ["anthropic", "@anthropic-ai/sdk"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "anthropic", "endpoint": "https://api.anthropic.com", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "gemini",
+      "name": "Google Gemini",
+      "category": "chat",
+      "description": "Gemini models over the Google AI API.",
+      "aliases": ["google ai studio", "generative language"],
+      "evidence": { "envVars": ["GEMINI_API_KEY", "GOOGLE_API_KEY", "GOOGLE_GENAI_API_KEY"], "hosts": ["generativelanguage.googleapis.com"], "packages": ["google-generativeai", "google-genai", "@google/genai", "@google/generative-ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "gemini", "endpoint": "https://generativelanguage.googleapis.com/v1beta", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "kimi",
+      "name": "Kimi (Moonshot AI)",
+      "category": "chat",
+      "description": "Kimi K3 and K2 models. OpenAI-compatible at /v1, Anthropic-compatible at /anthropic.",
+      "aliases": ["moonshot", "kimi code"],
+      "evidence": { "envVars": ["MOONSHOT_API_KEY", "KIMI_API_KEY"], "hosts": ["api.moonshot.ai", "api.moonshot.cn"], "apps": ["Kimi"], "executables": ["kimi"], "packages": ["kimi-cli", "@moonshot-ai/kimi-code"], "configPaths": [".kimi-code/config.toml"] },
+      "routes": [
+        { "label": "Connect with API key (OpenAI format)", "method": "api", "format": "openai", "endpoint": "https://api.moonshot.ai/v1", "auth": "api-key", "verified": true },
+        { "label": "Connect with API key (Anthropic format)", "method": "api", "format": "anthropic", "endpoint": "https://api.moonshot.ai/anthropic", "auth": "api-key", "verified": true }
+      ],
+      "balance": {
+        "path": "/v1/users/me/balance",
+        "fields": [
+          { "label": "Available", "key": "data.available_balance", "unit": "CNY" },
+          { "label": "Cash", "key": "data.cash_balance", "unit": "CNY" },
+          { "label": "Voucher", "key": "data.voucher_balance", "unit": "CNY" }
+        ]
+      }
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral",
+      "category": "chat",
+      "evidence": { "envVars": ["MISTRAL_API_KEY"], "hosts": ["api.mistral.ai"], "packages": ["mistralai", "@mistralai/mistralai"] },
+      "description": "Mistral and Codestral models.",
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.mistral.ai/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "groq",
+      "name": "Groq",
+      "category": "chat",
+      "description": "Fast inference for open models.",
+      "evidence": { "envVars": ["GROQ_API_KEY"], "hosts": ["api.groq.com"], "packages": ["groq", "groq-sdk"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.groq.com/openai/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "category": "chat",
+      "description": "DeepSeek chat and reasoner models.",
+      "evidence": { "envVars": ["DEEPSEEK_API_KEY"], "hosts": ["api.deepseek.com"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.deepseek.com/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "category": "chat",
+      "description": "One key for hundreds of models from many vendors.",
+      "evidence": { "envVars": ["OPENROUTER_API_KEY"], "hosts": ["openrouter.ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://openrouter.ai/api/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "xai",
+      "name": "xAI Grok",
+      "category": "chat",
+      "description": "Grok models over the xAI API.",
+      "aliases": ["grok"],
+      "evidence": { "envVars": ["XAI_API_KEY", "GROK_API_KEY"], "hosts": ["api.x.ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.x.ai/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "cohere",
+      "name": "Cohere",
+      "category": "chat",
+      "description": "Command models over Cohere's OpenAI-compatible endpoint.",
+      "evidence": { "envVars": ["COHERE_API_KEY", "CO_API_KEY"], "hosts": ["api.cohere.com", "api.cohere.ai"], "packages": ["cohere", "cohere-ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.cohere.com/compatibility/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "together",
+      "name": "Together AI",
+      "category": "chat",
+      "description": "Hosted open models.",
+      "evidence": { "envVars": ["TOGETHER_API_KEY", "TOGETHERAI_API_KEY"], "hosts": ["api.together.xyz"], "packages": ["together", "together-ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.together.xyz/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "fireworks",
+      "name": "Fireworks AI",
+      "category": "chat",
+      "description": "Hosted open models with fast inference.",
+      "evidence": { "envVars": ["FIREWORKS_API_KEY"], "hosts": ["api.fireworks.ai"], "packages": ["fireworks-ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.fireworks.ai/inference/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity",
+      "category": "chat",
+      "description": "Sonar models with web search. The desktop app has no local API.",
+      "evidence": { "envVars": ["PERPLEXITY_API_KEY", "PPLX_API_KEY"], "hosts": ["api.perplexity.ai"], "apps": ["Perplexity"] },
+      "routes": [
+        { "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.perplexity.ai", "auth": "api-key", "verified": false },
+        { "label": "Desktop app only", "method": "api", "auth": "manual", "guidance": "The Perplexity app has no local API. Create an API key at perplexity.ai/settings/api, then use the API route.", "docsUrl": "https://docs.perplexity.ai" }
+      ]
+    },
+    {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "category": "chat",
+      "description": "Inference providers router and the Hub.",
+      "evidence": { "envVars": ["HF_TOKEN", "HUGGINGFACE_API_KEY", "HUGGINGFACEHUB_API_TOKEN", "HUGGING_FACE_HUB_TOKEN"], "hosts": ["router.huggingface.co", "api-inference.huggingface.co", "huggingface.co"], "packages": ["huggingface_hub", "@huggingface/inference"], "executables": ["huggingface-cli", "hf"] },
+      "routes": [{ "label": "Connect with token", "method": "api", "format": "openai", "endpoint": "https://router.huggingface.co/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "azure-openai",
+      "name": "Azure OpenAI",
+      "category": "chat",
+      "description": "OpenAI models hosted in an Azure resource. The endpoint is specific to your resource.",
+      "evidence": { "envVars": ["AZURE_OPENAI_API_KEY", "AZURE_OPENAI_ENDPOINT"], "hosts": ["openai.azure.com", "cognitiveservices.azure.com"] },
+      "routes": [{ "label": "Enter your Azure endpoint", "method": "api", "format": "openai", "auth": "api-key", "guidance": "Use your resource URL with /openai/v1 appended, and the key from the Azure portal.", "docsUrl": "https://learn.microsoft.com/azure/ai-services/openai/" }]
+    },
+    {
+      "id": "bedrock",
+      "name": "Amazon Bedrock",
+      "category": "chat",
+      "description": "Models through AWS. Uses AWS credentials, not a single key.",
+      "evidence": { "envVars": ["AWS_BEARER_TOKEN_BEDROCK", "BEDROCK_API_KEY"], "hosts": ["bedrock-runtime"] },
+      "routes": [{ "label": "Needs an OpenAI-compatible gateway", "method": "api", "format": "openai", "auth": "manual", "guidance": "Bedrock uses AWS request signing. Run a gateway such as LiteLLM or use a Bedrock API key with the OpenAI-compatible endpoint for your region.", "docsUrl": "https://docs.aws.amazon.com/bedrock/" }]
+    },
+    {
+      "id": "cerebras",
+      "name": "Cerebras",
+      "category": "chat",
+      "description": "Very fast inference for open models.",
+      "evidence": { "envVars": ["CEREBRAS_API_KEY"], "hosts": ["api.cerebras.ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.cerebras.ai/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "sambanova",
+      "name": "SambaNova",
+      "category": "chat",
+      "description": "Hosted open models.",
+      "evidence": { "envVars": ["SAMBANOVA_API_KEY"], "hosts": ["api.sambanova.ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.sambanova.ai/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "qwen",
+      "name": "Qwen (Alibaba DashScope)",
+      "category": "chat",
+      "description": "Qwen models over the DashScope OpenAI-compatible endpoint.",
+      "aliases": ["dashscope", "tongyi", "qwen code"],
+      "evidence": { "envVars": ["DASHSCOPE_API_KEY", "QWEN_API_KEY"], "hosts": ["dashscope.aliyuncs.com", "dashscope-intl.aliyuncs.com"], "executables": ["qwen"], "packages": ["@qwen-code/qwen-code"], "configPaths": [".qwen/settings.json"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "zhipu",
+      "name": "Zhipu GLM",
+      "category": "chat",
+      "description": "GLM models over the Zhipu open platform.",
+      "aliases": ["bigmodel", "z.ai"],
+      "evidence": { "envVars": ["ZHIPU_API_KEY", "ZHIPUAI_API_KEY", "ZAI_API_KEY"], "hosts": ["open.bigmodel.cn", "api.z.ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.z.ai/api/paas/v4", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "minimax",
+      "name": "MiniMax",
+      "category": "chat",
+      "description": "MiniMax text and speech models.",
+      "evidence": { "envVars": ["MINIMAX_API_KEY"], "hosts": ["api.minimax.io", "api.minimaxi.com"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.minimax.io/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "nvidia-nim",
+      "name": "NVIDIA NIM",
+      "category": "chat",
+      "description": "Hosted models on NVIDIA's API catalog.",
+      "evidence": { "envVars": ["NVIDIA_API_KEY", "NVIDIA_NIM_API_KEY"], "hosts": ["integrate.api.nvidia.com"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://integrate.api.nvidia.com/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "deepinfra",
+      "name": "DeepInfra",
+      "category": "chat",
+      "description": "Hosted open models.",
+      "evidence": { "envVars": ["DEEPINFRA_API_KEY", "DEEPINFRA_API_TOKEN"], "hosts": ["api.deepinfra.com"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.deepinfra.com/v1/openai", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "novita",
+      "name": "Novita AI",
+      "category": "chat",
+      "description": "Hosted open models and media generation.",
+      "evidence": { "envVars": ["NOVITA_API_KEY"], "hosts": ["api.novita.ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.novita.ai/v3/openai", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "litellm",
+      "name": "LiteLLM proxy",
+      "category": "local-server",
+      "description": "A local gateway that exposes many vendors behind one OpenAI-compatible endpoint.",
+      "evidence": { "executables": ["litellm"], "packages": ["litellm"], "ports": [4000], "envVars": ["LITELLM_API_KEY", "LITELLM_PROXY_API_KEY"] },
+      "routes": [{ "label": "Connect to the local proxy", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:4000/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama",
+      "category": "local-server",
+      "description": "Local models served on this computer. No key needed.",
+      "evidence": { "executables": ["ollama"], "ports": [11434], "apps": ["Ollama"], "envVars": ["OLLAMA_HOST", "OLLAMA_API_KEY"], "packages": ["ollama"] },
+      "routes": [{ "label": "Connect to Ollama", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:11434/v1", "auth": "none", "verified": false }]
+    },
+    {
+      "id": "lmstudio",
+      "name": "LM Studio",
+      "category": "local-server",
+      "description": "Local models with a built-in OpenAI-compatible server.",
+      "evidence": { "executables": ["lms"], "ports": [1234], "apps": ["LM Studio"], "configPaths": [".lmstudio/mcp.json"] },
+      "routes": [{ "label": "Connect to LM Studio's server", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:1234/v1", "auth": "none", "verified": false }]
+    },
+    {
+      "id": "jan",
+      "name": "Jan",
+      "category": "local-server",
+      "description": "Local chat app with an OpenAI-compatible server.",
+      "evidence": { "ports": [1337], "apps": ["Jan"] },
+      "routes": [{ "label": "Connect to Jan's server", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:1337/v1", "auth": "none", "verified": false }]
+    },
+    {
+      "id": "vllm",
+      "name": "vLLM",
+      "category": "local-server",
+      "description": "High-throughput model server.",
+      "evidence": { "executables": ["vllm"], "packages": ["vllm"], "ports": [8000] },
+      "routes": [{ "label": "Connect to the vLLM server", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:8000/v1", "auth": "none", "verified": false }]
+    },
+    {
+      "id": "llamacpp",
+      "name": "llama.cpp server",
+      "category": "local-server",
+      "description": "The llama.cpp HTTP server.",
+      "aliases": ["llama-server"],
+      "evidence": { "executables": ["llama-server", "llama-cli"], "ports": [8080] },
+      "routes": [{ "label": "Connect to llama-server", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:8080/v1", "auth": "none", "verified": false }]
+    },
+    {
+      "id": "localai",
+      "name": "LocalAI",
+      "category": "local-server",
+      "description": "Drop-in local replacement for the OpenAI API.",
+      "evidence": { "executables": ["local-ai"], "ports": [8080] },
+      "routes": [{ "label": "Connect to LocalAI", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:8080/v1", "auth": "none", "verified": false }]
+    },
+    {
+      "id": "gpt4all",
+      "name": "GPT4All",
+      "category": "local-server",
+      "description": "Local chat app with an optional API server.",
+      "evidence": { "apps": ["GPT4All"], "ports": [4891] },
+      "routes": [{ "label": "Connect to GPT4All's server", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:4891/v1", "auth": "none", "verified": false }]
+    },
+    {
+      "id": "koboldcpp",
+      "name": "KoboldCpp",
+      "category": "local-server",
+      "description": "Local model server with an OpenAI-compatible endpoint.",
+      "evidence": { "executables": ["koboldcpp"], "ports": [5001] },
+      "routes": [{ "label": "Connect to KoboldCpp", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:5001/v1", "auth": "none", "verified": false }]
+    },
+    {
+      "id": "text-generation-webui",
+      "name": "Text generation web UI",
+      "category": "local-server",
+      "description": "oobabooga's local UI with an OpenAI-compatible API.",
+      "evidence": { "ports": [5000, 7860], "apps": ["text-generation-webui"] },
+      "routes": [{ "label": "Connect to the local API", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:5000/v1", "auth": "none", "verified": false }]
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "category": "agent",
+      "description": "Anthropic's coding agent. AI Hub runs it through the Agent SDK with your Claude subscription.",
+      "evidence": { "executables": ["claude"], "packages": ["@anthropic-ai/claude-code"], "configPaths": [".claude.json", ".claude/settings.json"] },
+      "routes": [{ "label": "Sign in with your Claude subscription", "method": "claude-code", "auth": "signin", "verified": true }]
+    },
+    {
+      "id": "codex",
+      "name": "Codex CLI",
+      "category": "agent",
+      "description": "OpenAI's coding agent. AI Hub runs it through its app server with your ChatGPT sign-in.",
+      "evidence": { "executables": ["codex"], "packages": ["@openai/codex"], "configPaths": [".codex/config.toml"], "apps": ["OpenAI.Codex"] },
+      "routes": [{ "label": "Sign in with your ChatGPT account", "method": "codex", "auth": "signin", "verified": true }]
+    },
+    {
+      "id": "gemini-cli",
+      "name": "Gemini CLI",
+      "category": "agent",
+      "description": "Google's terminal agent.",
+      "evidence": { "executables": ["gemini"], "packages": ["@google/gemini-cli"], "configPaths": [".gemini/settings.json"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Gemini CLI has no stdin JSON protocol. Wrap it with a small script that reads {model,messages} and prints {text}, or connect the Gemini API directly.", "docsUrl": "https://github.com/google-gemini/gemini-cli" }]
+    },
+    {
+      "id": "copilot-cli",
+      "name": "GitHub Copilot",
+      "category": "agent",
+      "description": "Copilot CLI and the Copilot editor extensions.",
+      "evidence": { "executables": ["copilot", "github-copilot-cli"], "packages": ["@github/copilot"], "extensions": ["github.copilot", "github.copilot-chat"], "envVars": ["GITHUB_COPILOT_TOKEN"] },
+      "routes": [{ "label": "Copilot has no local API", "method": "api", "auth": "manual", "guidance": "Copilot runs inside its own editor or CLI. Use GitHub's MCP server to give AI Hub access to your repositories instead.", "docsUrl": "https://docs.github.com/copilot" }]
+    },
+    {
+      "id": "aider",
+      "name": "Aider",
+      "category": "agent",
+      "description": "Terminal pair-programming agent.",
+      "evidence": { "executables": ["aider"], "packages": ["aider-chat", "aider-install"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Aider takes its own flags. Wrap it with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://aider.chat/docs/" }]
+    },
+    {
+      "id": "opencode",
+      "name": "OpenCode",
+      "category": "agent",
+      "description": "Open-source coding agent with a terminal UI and headless mode.",
+      "evidence": { "executables": ["opencode"], "packages": ["opencode-ai"], "configPaths": [".config/opencode/opencode.json"], "apps": ["OpenCode"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Run OpenCode in non-interactive mode through a wrapper that reads {model,messages} and prints {text}.", "docsUrl": "https://opencode.ai/docs/" }]
+    },
+    {
+      "id": "goose",
+      "name": "Goose",
+      "category": "agent",
+      "description": "Block's open-source agent with MCP extensions.",
+      "evidence": { "executables": ["goose"], "apps": ["Goose"], "configPaths": ["Block/goose/config/config.yaml"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Goose supports headless runs. Wrap it with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://block.github.io/goose/" }]
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "category": "agent",
+      "description": "AI code editor. Its MCP servers are read from its config.",
+      "evidence": { "apps": ["Cursor"], "executables": ["cursor", "cursor-agent", "agent"], "configPaths": [".cursor/mcp.json"] },
+      "routes": [{ "label": "Cursor is an editor", "method": "mcp", "auth": "manual", "guidance": "Cursor has no chat API. Any MCP server configured in Cursor is listed separately with its own route.", "docsUrl": "https://docs.cursor.com" }]
+    },
+    {
+      "id": "windsurf",
+      "name": "Windsurf",
+      "category": "agent",
+      "description": "AI code editor by Codeium. Its MCP servers are read from its config.",
+      "aliases": ["codeium"],
+      "evidence": { "apps": ["Windsurf"], "configPaths": [".codeium/windsurf/mcp_config.json"] },
+      "routes": [{ "label": "Windsurf is an editor", "method": "mcp", "auth": "manual", "guidance": "Windsurf has no chat API. Its MCP servers are listed separately.", "docsUrl": "https://docs.windsurf.com" }]
+    },
+    {
+      "id": "cline",
+      "name": "Cline",
+      "category": "agent",
+      "description": "VS Code coding agent extension.",
+      "evidence": { "extensions": ["saoudrizwan.claude-dev"], "configPaths": ["Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json"] },
+      "routes": [{ "label": "Cline runs inside VS Code", "method": "mcp", "auth": "manual", "guidance": "Cline has no API of its own. Its MCP servers are listed separately.", "docsUrl": "https://docs.cline.bot" }]
+    },
+    {
+      "id": "roo-code",
+      "name": "Roo Code",
+      "category": "agent",
+      "description": "VS Code coding agent extension.",
+      "evidence": { "extensions": ["rooveterinaryinc.roo-cline"], "configPaths": ["Code/User/globalStorage/rooveterinaryinc.roo-cline/settings/mcp_settings.json"] },
+      "routes": [{ "label": "Roo Code runs inside VS Code", "method": "mcp", "auth": "manual", "guidance": "Roo Code has no API of its own. Its MCP servers are listed separately.", "docsUrl": "https://docs.roocode.com" }]
+    },
+    {
+      "id": "kilo-code",
+      "name": "Kilo Code",
+      "category": "agent",
+      "description": "VS Code coding agent extension.",
+      "evidence": { "extensions": ["kilocode.kilo-code"] },
+      "routes": [{ "label": "Kilo Code runs inside VS Code", "method": "mcp", "auth": "manual", "guidance": "Kilo Code has no API of its own. Its MCP servers are listed separately.", "docsUrl": "https://kilocode.ai/docs" }]
+    },
+    {
+      "id": "continue",
+      "name": "Continue",
+      "category": "agent",
+      "description": "Open-source editor assistant.",
+      "evidence": { "extensions": ["continue.continue"], "configPaths": [".continue/config.yaml", ".continue/config.json"] },
+      "routes": [{ "label": "Continue runs inside the editor", "method": "api", "auth": "manual", "guidance": "Continue has no API of its own. The providers configured in its config file can be connected here directly.", "docsUrl": "https://docs.continue.dev" }]
+    },
+    {
+      "id": "augment",
+      "name": "Augment Code",
+      "category": "agent",
+      "description": "Editor agent with a CLI.",
+      "evidence": { "extensions": ["augment.vscode-augment"], "executables": ["auggie"], "packages": ["@augmentcode/auggie"] },
+      "routes": [{ "label": "Use the Auggie CLI as a bridge", "method": "cli", "auth": "manual", "guidance": "Wrap auggie with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://docs.augmentcode.com" }]
+    },
+    {
+      "id": "amp",
+      "name": "Amp",
+      "category": "agent",
+      "description": "Sourcegraph's coding agent CLI.",
+      "evidence": { "executables": ["amp"], "packages": ["@sourcegraph/amp"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap amp's execute mode with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://ampcode.com/manual" }]
+    },
+    {
+      "id": "antigravity-cli",
+      "name": "Antigravity CLI",
+      "category": "agent",
+      "description": "Google's Antigravity agent in the terminal (agy).",
+      "aliases": ["antigravity", "agy"], "evidence": { "executables": ["agy"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap agy with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "devin-cli",
+      "name": "Devin CLI",
+      "category": "agent",
+      "description": "Cognition's Devin agent in the terminal.",
+      "aliases": ["devin"], "evidence": { "executables": ["devin"], "configPaths": [".config/devin/config.json", "devin/config.json"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap devin with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "droid",
+      "name": "Droid",
+      "category": "agent",
+      "description": "Factory's terminal coding agent.",
+      "aliases": ["factory droid"], "evidence": { "executables": ["droid"], "configPaths": [".factory/settings.json"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap droid with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "grok-cli",
+      "name": "Grok CLI",
+      "category": "agent",
+      "description": "xAI's Grok agent in the terminal.",
+      "evidence": { "executables": ["grok"], "configPaths": [".grok/config.toml"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap grok with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "hermes",
+      "name": "Hermes Agent",
+      "category": "agent",
+      "description": "Terminal agent with a plugin system and resumable sessions.",
+      "aliases": ["hermes-agent"], "evidence": { "executables": ["hermes"], "configPaths": [".hermes/config.yaml"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap hermes with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "kiro-cli",
+      "name": "Kiro CLI",
+      "category": "agent",
+      "description": "AWS's Kiro agent in the terminal.",
+      "aliases": ["kiro"], "evidence": { "executables": ["kiro-cli"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap kiro-cli with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "letta-code",
+      "name": "Letta Code",
+      "category": "agent",
+      "description": "Letta's terminal agent with persistent memory.",
+      "aliases": ["letta"], "evidence": { "executables": ["letta"], "packages": ["@letta-ai/letta-code"], "configPaths": [".letta/settings.json"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap letta with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "mastracode",
+      "name": "MastraCode",
+      "category": "agent",
+      "description": "Mastra's terminal coding agent.",
+      "aliases": ["mastra code"], "evidence": { "executables": ["mastracode"], "packages": ["mastracode"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap mastracode with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "pi",
+      "name": "Pi",
+      "category": "agent",
+      "description": "Pi coding agent for the terminal, extended with TypeScript extensions.",
+      "aliases": ["pi coding agent"], "evidence": { "executables": ["pi"], "packages": ["@earendil-works/pi-coding-agent"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap pi with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "omp",
+      "name": "Oh My Pi",
+      "category": "agent",
+      "description": "Pi-based terminal agent (omp).",
+      "aliases": ["oh-my-pi"], "evidence": { "executables": ["omp"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap omp with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "qodercli",
+      "name": "Qoder CLI",
+      "category": "agent",
+      "description": "Qoder's terminal coding agent.",
+      "aliases": ["qoder"], "evidence": { "executables": ["qodercli", "qoderclicn"], "configPaths": [".qoder/settings.json"] },
+      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap qodercli with a script that reads {model,messages} and prints {text}." }]
+    },
+    {
+      "id": "zed",
+      "name": "Zed",
+      "category": "agent",
+      "description": "Editor with an agent panel and MCP context servers.",
+      "evidence": { "apps": ["Zed"], "executables": ["zed"], "configPaths": ["Zed/settings.json"] },
+      "routes": [{ "label": "Zed is an editor", "method": "mcp", "auth": "manual", "guidance": "Zed has no chat API. Its context servers are listed separately.", "docsUrl": "https://zed.dev/docs/ai/overview" }]
+    },
+    {
+      "id": "warp",
+      "name": "Warp",
+      "category": "agent",
+      "description": "Terminal with built-in agents.",
+      "evidence": { "apps": ["Warp"], "executables": ["warp"] },
+      "routes": [{ "label": "Warp is a terminal", "method": "api", "auth": "manual", "guidance": "Warp's agents run inside Warp. There is no local API to connect.", "docsUrl": "https://docs.warp.dev" }]
+    },
+    {
+      "id": "chatgpt-desktop",
+      "name": "ChatGPT",
+      "category": "desktop",
+      "description": "OpenAI's desktop app and website. No local API.",
+      "evidence": { "apps": ["ChatGPT"], "extensions": ["chatgpt"] },
+      "routes": [{ "label": "Use the OpenAI API instead", "method": "api", "format": "openai", "endpoint": "https://api.openai.com/v1", "auth": "api-key", "guidance": "The ChatGPT app cannot be driven from outside. Create an API key at platform.openai.com to use the same models here.", "docsUrl": "https://platform.openai.com/api-keys" }]
+    },
+    {
+      "id": "claude-desktop",
+      "name": "Claude Desktop",
+      "category": "desktop",
+      "description": "Anthropic's desktop app. Its MCP servers are read from its config.",
+      "evidence": { "apps": ["Claude"], "configPaths": ["Claude/claude_desktop_config.json"] },
+      "routes": [{ "label": "Use Claude Code or the API instead", "method": "claude-code", "auth": "signin", "guidance": "The desktop app has no local API. Claude Code uses the same subscription and can be connected here; its MCP servers are listed separately." }]
+    },
+    {
+      "id": "copilot-desktop",
+      "name": "Microsoft Copilot",
+      "category": "desktop",
+      "description": "Microsoft's assistant app. No local API.",
+      "evidence": { "apps": ["Microsoft Copilot", "Copilot"] },
+      "routes": [{ "label": "No local API", "method": "api", "auth": "manual", "guidance": "Microsoft Copilot cannot be driven from outside. Use Azure OpenAI for the same models." }]
+    },
+    {
+      "id": "cherry-studio",
+      "name": "Cherry Studio",
+      "category": "desktop",
+      "description": "Multi-provider desktop client.",
+      "evidence": { "apps": ["Cherry Studio", "CherryStudio"] },
+      "routes": [{ "label": "Connect its providers directly", "method": "api", "auth": "manual", "guidance": "Cherry Studio stores provider keys in its own settings. Add the same providers here with their keys." }]
+    },
+    {
+      "id": "chatbox",
+      "name": "Chatbox",
+      "category": "desktop",
+      "description": "Multi-provider desktop client.",
+      "evidence": { "apps": ["Chatbox", "xyz.chatboxapp.app"] },
+      "routes": [{ "label": "Connect its providers directly", "method": "api", "auth": "manual", "guidance": "Chatbox stores provider keys in its own settings. Add the same providers here with their keys." }]
+    },
+    {
+      "id": "msty",
+      "name": "Msty",
+      "category": "desktop",
+      "description": "Local and cloud model desktop client.",
+      "evidence": { "apps": ["Msty", "Msty Studio"] },
+      "routes": [{ "label": "Connect its providers directly", "method": "api", "auth": "manual", "guidance": "Msty stores provider keys in its own settings. Local models it runs can be reached through Ollama if that is installed." }]
+    },
+    {
+      "id": "open-webui",
+      "name": "Open WebUI",
+      "category": "local-server",
+      "description": "Self-hosted chat interface with an OpenAI-compatible API.",
+      "evidence": { "ports": [3000, 8080], "packages": ["open-webui"], "executables": ["open-webui"] },
+      "routes": [{ "label": "Connect to Open WebUI", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:3000/api", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "anythingllm",
+      "name": "AnythingLLM",
+      "category": "local-server",
+      "description": "Document chat with an OpenAI-compatible API.",
+      "evidence": { "apps": ["AnythingLLM"], "ports": [3001] },
+      "routes": [{ "label": "Connect to AnythingLLM", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:3001/api/v1/openai", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "lobehub",
+      "name": "LobeHub",
+      "category": "local-server",
+      "description": "Self-hosted agent workspace.",
+      "evidence": { "ports": [3210] },
+      "routes": [{ "label": "Connect its providers directly", "method": "api", "auth": "manual", "guidance": "LobeHub has no outbound API. Add the providers it uses here with their keys." }]
+    },
+    {
+      "id": "librechat",
+      "name": "LibreChat",
+      "category": "local-server",
+      "description": "Self-hosted multi-provider chat.",
+      "evidence": { "ports": [3080] },
+      "routes": [{ "label": "Connect its providers directly", "method": "api", "auth": "manual", "guidance": "LibreChat has no outbound API. Add the providers it uses here with their keys." }]
+    },
+    {
+      "id": "higgsfield",
+      "name": "Higgsfield",
+      "category": "media",
+      "description": "Image, video and audio generation. Exposes an MCP server.",
+      "evidence": { "hosts": ["mcp.higgsfield.ai", "higgsfield.ai"], "apps": ["Higgsfield"] },
+      "routes": [{ "label": "Connect the Higgsfield MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.higgsfield.ai/mcp", "auth": "oauth", "verified": false }]
+    },
+    {
+      "id": "heygen",
+      "name": "HeyGen",
+      "category": "media",
+      "description": "Avatar video generation. Exposes an MCP server and a REST API.",
+      "evidence": { "hosts": ["mcp.heygen.com", "api.heygen.com"], "envVars": ["HEYGEN_API_KEY"] },
+      "routes": [{ "label": "Connect the HeyGen MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.heygen.com/mcp/v1/", "auth": "oauth", "verified": false }]
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "category": "media",
+      "description": "Voice generation. Exposes an MCP server.",
+      "evidence": { "envVars": ["ELEVENLABS_API_KEY", "ELEVEN_API_KEY"], "hosts": ["api.elevenlabs.io"], "packages": ["elevenlabs", "@elevenlabs/elevenlabs-js", "elevenlabs-mcp"] },
+      "routes": [{ "label": "Connect the ElevenLabs MCP server", "method": "mcp", "mcpTransport": "stdio", "command": "uvx", "args": ["elevenlabs-mcp"], "auth": "api-key", "guidance": "Needs ELEVENLABS_API_KEY in the server's environment.", "docsUrl": "https://github.com/elevenlabs/elevenlabs-mcp", "verified": false }]
+    },
+    {
+      "id": "runway",
+      "name": "Runway",
+      "category": "media",
+      "description": "Video generation API.",
+      "evidence": { "envVars": ["RUNWAYML_API_SECRET", "RUNWAY_API_KEY"], "hosts": ["api.dev.runwayml.com"] },
+      "routes": [{ "label": "Needs a connector plugin", "method": "api", "auth": "manual", "guidance": "Runway's API is a job-based REST API, not a chat endpoint. A connector plugin is required.", "docsUrl": "https://docs.dev.runwayml.com" }]
+    },
+    {
+      "id": "stability",
+      "name": "Stability AI",
+      "category": "media",
+      "description": "Image generation API.",
+      "evidence": { "envVars": ["STABILITY_API_KEY", "STABILITY_KEY"], "hosts": ["api.stability.ai"] },
+      "routes": [{ "label": "Needs a connector plugin", "method": "api", "auth": "manual", "guidance": "Stability's API is a media REST API, not a chat endpoint. A connector plugin is required.", "docsUrl": "https://platform.stability.ai/docs" }]
+    },
+    {
+      "id": "fal",
+      "name": "fal.ai",
+      "category": "media",
+      "description": "Hosted media models.",
+      "evidence": { "envVars": ["FAL_KEY", "FAL_API_KEY"], "hosts": ["fal.run", "queue.fal.run"], "packages": ["fal-client", "@fal-ai/client"] },
+      "routes": [{ "label": "Needs a connector plugin", "method": "api", "auth": "manual", "guidance": "fal exposes per-model endpoints. A connector plugin is required.", "docsUrl": "https://docs.fal.ai" }]
+    },
+    {
+      "id": "replicate",
+      "name": "Replicate",
+      "category": "media",
+      "description": "Hosted models with a prediction API.",
+      "evidence": { "envVars": ["REPLICATE_API_TOKEN"], "hosts": ["api.replicate.com"], "packages": ["replicate"] },
+      "routes": [{ "label": "Needs a connector plugin", "method": "api", "auth": "manual", "guidance": "Replicate uses a prediction API. A connector plugin is required.", "docsUrl": "https://replicate.com/docs" }]
+    },
+    {
+      "id": "midjourney",
+      "name": "Midjourney",
+      "category": "media",
+      "description": "Image generation through Discord or the web app. No public API.",
+      "evidence": { "apps": ["Midjourney"] },
+      "routes": [{ "label": "No public API", "method": "api", "auth": "manual", "guidance": "Midjourney has no official API. Generate on the platform and import the results into Creatives." }]
+    },
+    {
+      "id": "suno",
+      "name": "Suno",
+      "category": "media",
+      "description": "Music generation. No public API.",
+      "evidence": { "apps": ["Suno"] },
+      "routes": [{ "label": "No public API", "method": "api", "auth": "manual", "guidance": "Suno has no official API. Generate on the platform and import the results into Creatives." }]
+    },
+    {
+      "id": "github-mcp",
+      "name": "GitHub MCP server",
+      "category": "tools",
+      "description": "Repositories, issues and pull requests as tools.",
+      "evidence": { "hosts": ["api.githubcopilot.com"], "envVars": ["GITHUB_PERSONAL_ACCESS_TOKEN"], "packages": ["@modelcontextprotocol/server-github"] },
+      "routes": [{ "label": "Connect GitHub's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://api.githubcopilot.com/mcp/", "auth": "oauth", "verified": false }]
+    },
+    {
+      "id": "notion-mcp",
+      "name": "Notion MCP server",
+      "category": "tools",
+      "description": "Pages and databases as tools.",
+      "evidence": { "hosts": ["mcp.notion.com"], "envVars": ["NOTION_TOKEN", "NOTION_API_KEY"] },
+      "routes": [{ "label": "Connect Notion's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.notion.com/mcp", "auth": "oauth", "verified": false }]
+    },
+    {
+      "id": "linear-mcp",
+      "name": "Linear MCP server",
+      "category": "tools",
+      "description": "Issues and projects as tools.",
+      "evidence": { "hosts": ["mcp.linear.app"], "envVars": ["LINEAR_API_KEY"] },
+      "routes": [{ "label": "Connect Linear's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.linear.app/mcp", "auth": "oauth", "verified": false }]
+    },
+    {
+      "id": "atlassian-mcp",
+      "name": "Atlassian MCP server",
+      "category": "tools",
+      "description": "Jira and Confluence as tools.",
+      "evidence": { "hosts": ["mcp.atlassian.com"] },
+      "routes": [{ "label": "Connect Atlassian's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.atlassian.com/v1/mcp", "auth": "oauth", "verified": false }]
+    },
+    {
+      "id": "stripe-mcp",
+      "name": "Stripe MCP server",
+      "category": "tools",
+      "description": "Payments data as tools.",
+      "evidence": { "hosts": ["mcp.stripe.com"], "envVars": ["STRIPE_SECRET_KEY"] },
+      "routes": [{ "label": "Connect Stripe's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.stripe.com", "auth": "oauth", "verified": false }]
+    },
+    {
+      "id": "buffer-mcp",
+      "name": "Buffer MCP server",
+      "category": "tools",
+      "description": "Social media scheduling as tools.",
+      "evidence": { "hosts": ["mcp.buffer.com"] },
+      "routes": [{ "label": "Connect Buffer's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.buffer.com/mcp", "auth": "oauth", "verified": false }]
+    },
+    {
+      "id": "sentry-mcp",
+      "name": "Sentry MCP server",
+      "category": "tools",
+      "description": "Errors and issues as tools.",
+      "evidence": { "hosts": ["mcp.sentry.dev"] },
+      "routes": [{ "label": "Connect Sentry's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.sentry.dev/mcp", "auth": "oauth", "verified": false }]
+    },
+    {
+      "id": "vercel-mcp",
+      "name": "Vercel MCP server",
+      "category": "tools",
+      "description": "Deployments and projects as tools.",
+      "evidence": { "hosts": ["mcp.vercel.com"] },
+      "routes": [{ "label": "Connect Vercel's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.vercel.com", "auth": "oauth", "verified": false }]
+    },
+    {
+      "id": "context7",
+      "name": "Context7",
+      "category": "tools",
+      "description": "Up-to-date library documentation as tools.",
+      "evidence": { "hosts": ["mcp.context7.com"], "packages": ["@upstash/context7-mcp"] },
+      "routes": [{ "label": "Connect Context7", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.context7.com/mcp", "auth": "none", "verified": false }]
+    },
+    {
+      "id": "playwright-mcp",
+      "name": "Playwright MCP server",
+      "category": "tools",
+      "description": "Browser automation as tools.",
+      "evidence": { "packages": ["@playwright/mcp"] },
+      "routes": [{ "label": "Run the Playwright MCP server", "method": "mcp", "mcpTransport": "stdio", "command": "npx", "args": ["@playwright/mcp@latest"], "auth": "none", "verified": false }]
+    },
+    {
+      "id": "filesystem-mcp",
+      "name": "Filesystem MCP server",
+      "category": "tools",
+      "description": "Reference server that exposes chosen folders as tools.",
+      "evidence": { "packages": ["@modelcontextprotocol/server-filesystem"] },
+      "routes": [{ "label": "Run the filesystem MCP server", "method": "mcp", "mcpTransport": "stdio", "command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem"], "auth": "none", "guidance": "Add the folders to expose as extra arguments.", "verified": false }]
+    },
+    {
+      "id": "langchain",
+      "name": "LangChain",
+      "category": "tools",
+      "description": "Application framework installed on this machine. Not a platform to connect, but a sign that provider keys exist.",
+      "evidence": { "packages": ["langchain", "langchain-core", "langchain-openai", "@langchain/core"], "envVars": ["LANGCHAIN_API_KEY", "LANGSMITH_API_KEY"] },
+      "routes": [{ "label": "Framework, no connection", "method": "api", "auth": "manual", "guidance": "LangChain is a library. Connect the providers it uses here directly." }]
+    },
+    {
+      "id": "mcp-sdk",
+      "name": "MCP SDK",
+      "category": "tools",
+      "description": "Model Context Protocol SDK installed on this machine. Local MCP servers may exist in projects.",
+      "evidence": { "packages": ["mcp", "@modelcontextprotocol/sdk", "fastmcp"] },
+      "routes": [{ "label": "SDK, no connection", "method": "mcp", "auth": "manual", "guidance": "This is a library. Local MCP servers built with it can be added with the MCP route and their command." }]
+    }
+  ]
+}
