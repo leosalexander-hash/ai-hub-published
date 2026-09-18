@@ -1,0 +1,85 @@
+{
+  "version": "2026-09-18",
+  "skills": [
+    {
+      "id": "anthropic-pdf",
+      "name": "pdf",
+      "description": "Read, extract, merge, split, rotate, watermark, create, fill and OCR PDF files. Use when a .pdf file is involved.",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/pdf",
+      "author": "Anthropic",
+      "license": "See LICENSE.txt in the skill"
+    },
+    {
+      "id": "anthropic-docx",
+      "name": "docx",
+      "description": "Create, read, edit and convert Word documents (.docx): tracked changes, comments, formatting, tables, images.",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/docx",
+      "author": "Anthropic",
+      "license": "See LICENSE.txt in the skill"
+    },
+    {
+      "id": "anthropic-xlsx",
+      "name": "xlsx",
+      "description": "Spreadsheets as input or output: create, read, edit and analyse .xlsx and .csv files with formulas and charts.",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/xlsx",
+      "author": "Anthropic",
+      "license": "See LICENSE.txt in the skill"
+    },
+    {
+      "id": "anthropic-pptx",
+      "name": "pptx",
+      "description": "Create, read and edit PowerPoint presentations (.pptx): slides, layouts, images, notes.",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/pptx",
+      "author": "Anthropic",
+      "license": "See LICENSE.txt in the skill"
+    },
+    {
+      "id": "anthropic-doc-coauthoring",
+      "name": "doc-coauthoring",
+      "description": "A structured workflow for writing documentation together: proposals, specs, guides, decision records.",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/doc-coauthoring",
+      "author": "Anthropic",
+      "license": "See LICENSE.txt in the skill"
+    },
+    {
+      "id": "anthropic-frontend-design",
+      "name": "frontend-design",
+      "description": "Distinctive, intentional visual design when building or reshaping a user interface.",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/frontend-design",
+      "author": "Anthropic",
+      "license": "See LICENSE.txt in the skill"
+    },
+    {
+      "id": "anthropic-canvas-design",
+      "name": "canvas-design",
+      "description": "Visual art as .png and .pdf documents from a design brief: posters, covers, single images.",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/canvas-design",
+      "author": "Anthropic",
+      "license": "See LICENSE.txt in the skill"
+    },
+    {
+      "id": "anthropic-internal-comms",
+      "name": "internal-comms",
+      "description": "Internal communications in the formats a company uses: updates, announcements, reports, FAQs.",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/internal-comms",
+      "author": "Anthropic",
+      "license": "See LICENSE.txt in the skill"
+    },
+    {
+      "id": "anthropic-mcp-builder",
+      "name": "mcp-builder",
+      "description": "For developers: how to build a good MCP tool server that other AI platforms can use.",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/mcp-builder",
+      "author": "Anthropic",
+      "license": "See LICENSE.txt in the skill"
+    },
+    {
+      "id": "anthropic-skill-creator",
+      "name": "skill-creator",
+      "description": "Write a new skill, or improve and measure an existing one.",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/skill-creator",
+      "author": "Anthropic",
+      "license": "See LICENSE.txt in the skill"
+    }
+  ]
+}
