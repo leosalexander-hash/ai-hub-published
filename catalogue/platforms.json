@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-16",
+  "version": "2026-09-19",
   "note": "Known AI platforms with the evidence that reveals them on a machine and the route to connect each one. Adding a platform is a change to this file. Routes with verified=false are written from vendor documentation and have not been exercised through AI Hub yet; the card says so. Values of keys are never read by the scanner; only variable names.",
   "platforms": [
     {
@@ -759,6 +759,30 @@
       "description": "Reference server that exposes chosen folders as tools.",
       "evidence": { "packages": ["@modelcontextprotocol/server-filesystem"] },
       "routes": [{ "label": "Run the filesystem MCP server", "method": "mcp", "mcpTransport": "stdio", "command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem"], "auth": "none", "guidance": "Add the folders to expose as extra arguments.", "verified": false }]
+    },
+    {
+      "id": "dropbox-mcp",
+      "name": "Dropbox MCP server",
+      "category": "tools",
+      "description": "Dropbox files as tools: browse, search, read, create, move, share links. A synced Dropbox folder also works as a project folder without any connection.",
+      "evidence": { "hosts": ["mcp.dropbox.com", "api.dropboxapi.com"], "apps": ["Dropbox"] },
+      "routes": [{ "label": "Connect Dropbox's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.dropbox.com/mcp", "auth": "oauth", "guidance": "Open beta. Sign in with your Dropbox account. If Dropbox refuses the sign-in from AI Hub, it needs an app created in the Dropbox App Console first.", "docsUrl": "https://help.dropbox.com/integrations/connect-dropbox-mcp-server", "verified": false }]
+    },
+    {
+      "id": "google-drive-mcp",
+      "name": "Google Drive MCP server",
+      "category": "tools",
+      "description": "Google's remote Drive server: search, read, metadata, create and download. A Google Drive folder synced to this PC also works as a project folder without any connection.",
+      "evidence": { "hosts": ["drivemcp.googleapis.com"], "apps": ["Google Drive"] },
+      "routes": [{ "label": "Needs your own Google OAuth client", "method": "mcp", "mcpTransport": "http", "auth": "manual", "guidance": "The server is https://drivemcp.googleapis.com/mcp/v1. Google requires an OAuth client id and secret from your own Google Cloud project and membership of the Workspace Developer Preview Program. AI Hub's sign-in registers itself with a server automatically and has no field for a client id yet, so this route cannot be completed here today.", "docsUrl": "https://developers.google.com/workspace/drive/api/guides/configure-mcp-server", "verified": false }]
+    },
+    {
+      "id": "onedrive-mcp",
+      "name": "OneDrive and SharePoint MCP server",
+      "category": "tools",
+      "description": "Microsoft's remote server for OneDrive and SharePoint files (work or school accounts). A OneDrive folder synced to this PC also works as a project folder without any connection.",
+      "evidence": { "hosts": ["agent365.svc.cloud.microsoft"], "apps": ["OneDrive", "Microsoft OneDrive"] },
+      "routes": [{ "label": "Enter your tenant's server address", "method": "mcp", "mcpTransport": "http", "auth": "oauth", "guidance": "The address is https://agent365.svc.cloud.microsoft/agents/tenants/<tenant id>/servers/mcp_ODSPRemoteServer with your Microsoft Entra tenant id. Needs Microsoft Agent 365 with a Microsoft 365 Copilot licence, enabled by your admin. Personal OneDrive accounts are not covered by Microsoft's documentation.", "docsUrl": "https://github.com/microsoft/mcp", "verified": false }]
     },
     {
       "id": "langchain",
