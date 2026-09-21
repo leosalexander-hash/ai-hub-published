@@ -1,9 +1,9 @@
 {
-  "version": "0.2.0",
-  "createdAt": "2026-09-21T00:28:34.318Z",
+  "version": "0.2.1",
+  "createdAt": "2026-09-21T10:06:42.578Z",
   "node": "24.15.0",
-  "zip": "ai-hub-0.2.0.zip",
-  "size": 181683321,
-  "sha256": "b811b006a57f7f01c44083193d922d4519ca566a52ebc4dcb2a99db665af9ae7",
-  "url": "https://github.com/leosalexander-hash/ai-hub/releases/tag/v0.2.0"
+  "zip": "ai-hub-0.2.1.zip",
+  "size": 181688781,
+  "sha256": "fa0894de7913bbf881f22f9d07ca0e179fc39401ad65035a383244806008e118",
+  "url": "https://github.com/leosalexander-hash/ai-hub/releases/tag/v0.2.1"
 }
