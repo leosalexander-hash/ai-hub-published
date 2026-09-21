@@ -1,0 +1,50 @@
+# Builds the AI Hub phone helper (phone/tailnet) and attaches it to a GitHub
+# release. Published to .github/workflows/tailnet.yml of the public
+# repository by AI Hub's npm run publish; runs on every tag named
+# tailnet-v<version>, or by hand from the Actions page.
+name: Phone helper
+
+on:
+  push:
+    tags: ["tailnet-v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: phone/tailnet
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: phone/tailnet/go.mod
+      - name: Test
+        run: go test ./...
+      - name: Build for Windows x64
+        env:
+          CGO_ENABLED: "0"
+          GOOS: windows
+          GOARCH: amd64
+        run: go build -trimpath -ldflags="-s -w" -o ai-hub-tailnet-win32-x64.exe .
+      - name: Checksum
+        run: sha256sum ai-hub-tailnet-win32-x64.exe | tee ai-hub-tailnet-win32-x64.exe.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ai-hub-tailnet-win32-x64
+          path: |
+            phone/tailnet/ai-hub-tailnet-win32-x64.exe
+            phone/tailnet/ai-hub-tailnet-win32-x64.exe.sha256
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/tailnet-v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh release create "$GITHUB_REF_NAME"
+          ai-hub-tailnet-win32-x64.exe ai-hub-tailnet-win32-x64.exe.sha256
+          --title "Phone helper $GITHUB_REF_NAME"
+          --notes "AI Hub phone helper for Windows x64, built by this workflow from the tagged source. SHA-256 in the .sha256 file."
