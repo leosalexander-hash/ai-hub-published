@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-19",
+  "version": "2026-09-22",
   "note": "Known AI platforms with the evidence that reveals them on a machine and the route to connect each one. Adding a platform is a change to this file. Routes with verified=false are written from vendor documentation and have not been exercised through AI Hub yet; the card says so. Values of keys are never read by the scanner; only variable names.",
   "platforms": [
     {
@@ -34,9 +34,9 @@
       "category": "chat",
       "description": "Kimi K3 and K2 models. OpenAI-compatible at /v1, Anthropic-compatible at /anthropic.",
       "aliases": ["moonshot", "kimi code"],
-      "evidence": { "envVars": ["MOONSHOT_API_KEY", "KIMI_API_KEY"], "hosts": ["api.moonshot.ai", "api.moonshot.cn"], "apps": ["Kimi"], "executables": ["kimi"], "packages": ["kimi-cli", "@moonshot-ai/kimi-code"], "configPaths": [".kimi-code/config.toml"] },
+      "evidence": { "envVars": ["MOONSHOT_API_KEY", "KIMI_API_KEY"], "hosts": ["api.moonshot.ai", "api.moonshot.cn"], "apps": ["Kimi"], "executables": ["kimi", "kimi-code", "kimi-daimon", "daimon"], "packages": ["kimi-cli", "@moonshot-ai/kimi-code", "@kimi/daimon"], "configPaths": [".kimi-code/config.toml"] },
       "routes": [
-        { "label": "Connect with API key (OpenAI format)", "method": "api", "format": "openai", "endpoint": "https://api.moonshot.ai/v1", "auth": "api-key", "verified": true },
+        { "label": "Connect with API key (OpenAI format)", "method": "api", "format": "openai", "endpoint": "https://api.moonshot.ai/v1", "auth": "api-key", "verified": true, "guidance": "The Kimi desktop app has no local API and cannot be driven from outside. An API key reaches the same models here.", "docsUrl": "https://platform.kimi.ai/console/api-keys" },
         { "label": "Connect with API key (Anthropic format)", "method": "api", "format": "anthropic", "endpoint": "https://api.moonshot.ai/anthropic", "auth": "api-key", "verified": true }
       ],
       "balance": {
@@ -52,7 +52,7 @@
       "id": "mistral",
       "name": "Mistral",
       "category": "chat",
-      "evidence": { "envVars": ["MISTRAL_API_KEY"], "hosts": ["api.mistral.ai"], "packages": ["mistralai", "@mistralai/mistralai"] },
+      "evidence": { "envVars": ["MISTRAL_API_KEY"], "hosts": ["api.mistral.ai"], "executables": ["mistral-vibe", "vibe"], "packages": ["mistralai", "@mistralai/mistralai", "mistral-vibe"] },
       "description": "Mistral and Codestral models.",
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.mistral.ai/v1", "auth": "api-key", "verified": false }]
     },
