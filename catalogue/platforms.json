@@ -1,9 +1,10 @@
 {
-  "version": "2026-09-22",
+  "version": "2026-09-23",
   "note": "Known AI platforms with the evidence that reveals them on a machine and the route to connect each one. Adding a platform is a change to this file. Routes with verified=false are written from vendor documentation and have not been exercised through AI Hub yet; the card says so. Values of keys are never read by the scanner; only variable names.",
   "platforms": [
     {
       "id": "openai",
+      "keyPrefixes": ["sk-proj-", "sk-svcacct-"],
       "name": "OpenAI",
       "category": "chat",
       "description": "GPT models over the OpenAI API.",
@@ -13,6 +14,7 @@
     },
     {
       "id": "anthropic",
+      "keyPrefixes": ["sk-ant-"],
       "name": "Anthropic",
       "category": "chat",
       "description": "Claude models over the Anthropic Messages API.",
@@ -21,6 +23,7 @@
     },
     {
       "id": "gemini",
+      "keyPrefixes": ["AIza"],
       "name": "Google Gemini",
       "category": "chat",
       "description": "Gemini models over the Google AI API.",
@@ -58,6 +61,7 @@
     },
     {
       "id": "groq",
+      "keyPrefixes": ["gsk_"],
       "name": "Groq",
       "category": "chat",
       "description": "Fast inference for open models.",
@@ -74,6 +78,7 @@
     },
     {
       "id": "openrouter",
+      "keyPrefixes": ["sk-or-"],
       "name": "OpenRouter",
       "category": "chat",
       "description": "One key for hundreds of models from many vendors.",
@@ -82,6 +87,7 @@
     },
     {
       "id": "xai",
+      "keyPrefixes": ["xai-"],
       "name": "xAI Grok",
       "category": "chat",
       "description": "Grok models over the xAI API.",
@@ -115,6 +121,7 @@
     },
     {
       "id": "perplexity",
+      "keyPrefixes": ["pplx-"],
       "name": "Perplexity",
       "category": "chat",
       "description": "Sonar models with web search. The desktop app has no local API.",
@@ -126,6 +133,7 @@
     },
     {
       "id": "huggingface",
+      "keyPrefixes": ["hf_"],
       "name": "Hugging Face",
       "category": "chat",
       "description": "Inference providers router and the Hub.",
@@ -774,7 +782,7 @@
       "category": "tools",
       "description": "Google's remote Drive server: search, read, metadata, create and download. A Google Drive folder synced to this PC also works as a project folder without any connection.",
       "evidence": { "hosts": ["drivemcp.googleapis.com"], "apps": ["Google Drive"] },
-      "routes": [{ "label": "Needs your own Google OAuth client", "method": "mcp", "mcpTransport": "http", "auth": "manual", "guidance": "The server is https://drivemcp.googleapis.com/mcp/v1. Google requires an OAuth client id and secret from your own Google Cloud project and membership of the Workspace Developer Preview Program. AI Hub's sign-in registers itself with a server automatically and has no field for a client id yet, so this route cannot be completed here today.", "docsUrl": "https://developers.google.com/workspace/drive/api/guides/configure-mcp-server", "verified": false }]
+      "routes": [{ "label": "Sign in with your own Google sign-in app", "method": "mcp", "mcpTransport": "http", "endpoint": "https://drivemcp.googleapis.com/mcp/v1", "auth": "oauth", "guidance": "Google only accepts a sign-in app from your own Google Cloud project, and its Drive server needs the Workspace Developer Preview Program. Create an OAuth client there with the callback address AI Hub shows, then press Sign in and enter its client ID when AI Hub asks.", "docsUrl": "https://developers.google.com/workspace/drive/api/guides/configure-mcp-server", "verified": false }]
     },
     {
       "id": "onedrive-mcp",
