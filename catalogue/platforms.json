@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-24",
+  "version": "2026-09-25",
   "note": "Known AI platforms with the evidence that reveals them on a machine and the route to connect each one. Adding a platform is a change to this file. Routes with verified=false are written from vendor documentation and have not been exercised through AI Hub yet; the card says so. Values of keys are never read by the scanner; only variable names.",
   "platforms": [
     {
@@ -36,10 +36,10 @@
       "name": "Kimi (Moonshot AI)",
       "category": "chat",
       "description": "Kimi K3 and K2 models. OpenAI-compatible at /v1, Anthropic-compatible at /anthropic.",
-      "aliases": ["moonshot", "kimi code"],
-      "evidence": { "envVars": ["MOONSHOT_API_KEY", "KIMI_API_KEY"], "hosts": ["api.moonshot.ai", "api.moonshot.cn"], "apps": ["Kimi"], "executables": ["kimi", "kimi-code", "kimi-daimon", "daimon"], "packages": ["kimi-cli", "@moonshot-ai/kimi-code", "@kimi/daimon"], "configPaths": [".kimi-code/config.toml"] },
+      "aliases": ["moonshot"],
+      "evidence": { "envVars": ["MOONSHOT_API_KEY", "KIMI_API_KEY"], "hosts": ["api.moonshot.ai", "api.moonshot.cn"], "apps": ["Kimi"], "executables": ["kimi-daimon", "daimon"], "packages": ["@kimi/daimon"] },
       "routes": [
-        { "label": "Connect with API key (OpenAI format)", "method": "api", "format": "openai", "endpoint": "https://api.moonshot.ai/v1", "auth": "api-key", "verified": true, "guidance": "The Kimi desktop apps, Kimi and Kimi Code, cannot be driven from outside: neither has an interface the hub can use. An API key reaches the same models here.", "docsUrl": "https://platform.kimi.ai/console/api-keys" },
+        { "label": "Connect with API key (OpenAI format)", "method": "api", "format": "openai", "endpoint": "https://api.moonshot.ai/v1", "auth": "api-key", "verified": true, "guidance": "The Kimi desktop app cannot be driven from outside, so an API key is the way in here. Kimi Code, the coding agent, has a card of its own.", "docsUrl": "https://platform.kimi.ai/console/api-keys" },
         { "label": "Connect with API key (Anthropic format)", "method": "api", "format": "anthropic", "endpoint": "https://api.moonshot.ai/anthropic", "auth": "api-key", "verified": true }
       ],
       "balance": {
@@ -50,6 +50,17 @@
           { "label": "Voucher", "key": "data.voucher_balance", "unit": "CNY" }
         ]
       }
+    },
+    {
+      "id": "kimi-code",
+      "name": "Kimi Code",
+      "category": "agent",
+      "description": "Moonshot AI's coding agent. AI Hub runs its command-line program through the Agent Client Protocol, signed in with your Kimi account (free or subscription).",
+      "evidence": { "apps": ["Kimi Code"], "executables": ["kimi", "kimi-code"], "packages": ["@moonshot-ai/kimi-code", "kimi-code", "kimi-cli"], "configPaths": [".kimi-code/config.toml"] },
+      "routes": [
+        { "label": "Sign in with your Kimi account (kimi.ai, international)", "method": "acp", "command": "kimi", "args": ["acp", "--region", "global"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": true, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" },
+        { "label": "Sign in with your Kimi account (kimi.com, mainland China)", "method": "acp", "command": "kimi", "args": ["acp", "--region", "mainland-cn"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": false, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" }
+      ]
     },
     {
       "id": "mistral",
