@@ -1,9 +1,22 @@
 {
-  "version": "2026-09-25",
+  "version": "2026-09-26",
   "note": "Known AI platforms with the evidence that reveals them on a machine and the route to connect each one. Adding a platform is a change to this file. Routes with verified=false are written from vendor documentation and have not been exercised through AI Hub yet; the card says so. Values of keys are never read by the scanner; only variable names.",
+  "vendors": [
+    { "id": "anthropic", "name": "Claude", "company": "Anthropic" },
+    { "id": "openai", "name": "OpenAI", "company": "OpenAI" },
+    { "id": "google", "name": "Gemini", "company": "Google" },
+    { "id": "moonshot", "name": "Kimi", "company": "Moonshot AI" },
+    { "id": "alibaba", "name": "Qwen", "company": "Alibaba Cloud" },
+    { "id": "mistral", "name": "Mistral", "company": "Mistral AI" },
+    { "id": "xai", "name": "Grok", "company": "xAI" },
+    { "id": "github", "name": "GitHub", "company": "GitHub" },
+    { "id": "amazon", "name": "Amazon", "company": "Amazon Web Services" },
+    { "id": "microsoft", "name": "Microsoft", "company": "Microsoft" }
+  ],
   "platforms": [
     {
       "id": "openai",
+      "vendor": "openai",
       "keyPrefixes": ["sk-proj-", "sk-svcacct-"],
       "name": "OpenAI",
       "category": "chat",
@@ -14,6 +27,7 @@
     },
     {
       "id": "anthropic",
+      "vendor": "anthropic",
       "keyPrefixes": ["sk-ant-"],
       "name": "Anthropic",
       "category": "chat",
@@ -23,6 +37,7 @@
     },
     {
       "id": "gemini",
+      "vendor": "google",
       "keyPrefixes": ["AIza"],
       "name": "Google Gemini",
       "category": "chat",
@@ -33,42 +48,55 @@
     },
     {
       "id": "kimi",
+      "vendor": "moonshot",
       "name": "Kimi (Moonshot AI)",
       "category": "chat",
       "description": "Kimi K3 and K2 models. OpenAI-compatible at /v1, Anthropic-compatible at /anthropic.",
       "aliases": ["moonshot"],
       "evidence": { "envVars": ["MOONSHOT_API_KEY", "KIMI_API_KEY"], "hosts": ["api.moonshot.ai", "api.moonshot.cn"], "apps": ["Kimi"], "executables": ["kimi-daimon", "daimon"], "packages": ["@kimi/daimon"] },
       "routes": [
-        { "label": "Connect with API key (OpenAI format)", "method": "api", "format": "openai", "endpoint": "https://api.moonshot.ai/v1", "auth": "api-key", "verified": true, "guidance": "The Kimi desktop app cannot be driven from outside, so an API key is the way in here. Kimi Code, the coding agent, has a card of its own.", "docsUrl": "https://platform.kimi.ai/console/api-keys" },
+        { "label": "Connect with API key (OpenAI format)", "method": "api", "format": "openai", "endpoint": "https://api.moonshot.ai/v1", "auth": "api-key", "verified": true, "guidance": "The Kimi desktop app cannot be driven from outside, so an API key is the way in here. Kimi Code, the coding agent, is connected by signing in with your Kimi account.", "docsUrl": "https://platform.kimi.ai/console/api-keys" },
         { "label": "Connect with API key (Anthropic format)", "method": "api", "format": "anthropic", "endpoint": "https://api.moonshot.ai/anthropic", "auth": "api-key", "verified": true }
       ],
       "balance": {
         "path": "/v1/users/me/balance",
         "fields": [
-          { "label": "Available", "key": "data.available_balance", "unit": "CNY" },
-          { "label": "Cash", "key": "data.cash_balance", "unit": "CNY" },
-          { "label": "Voucher", "key": "data.voucher_balance", "unit": "CNY" }
+          { "label": "Available", "key": "data.available_balance", "unit": "USD" },
+          { "label": "Cash", "key": "data.cash_balance", "unit": "USD" },
+          { "label": "Voucher", "key": "data.voucher_balance", "unit": "USD" }
         ]
       }
     },
     {
       "id": "kimi-code",
+      "vendor": "moonshot",
       "name": "Kimi Code",
       "category": "agent",
       "description": "Moonshot AI's coding agent. AI Hub runs its command-line program through the Agent Client Protocol, signed in with your Kimi account (free or subscription).",
       "evidence": { "apps": ["Kimi Code"], "executables": ["kimi", "kimi-code"], "packages": ["@moonshot-ai/kimi-code", "kimi-code", "kimi-cli"], "configPaths": [".kimi-code/config.toml"] },
       "routes": [
-        { "label": "Sign in with your Kimi account (kimi.ai, international)", "method": "acp", "command": "kimi", "args": ["acp", "--region", "global"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": true, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" },
-        { "label": "Sign in with your Kimi account (kimi.com, mainland China)", "method": "acp", "command": "kimi", "args": ["acp", "--region", "mainland-cn"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": false, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" }
+        { "label": "Sign in with your Kimi account (kimi.ai, international)", "method": "acp", "command": "kimi", "args": ["acp", "--region", "global"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": false, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" },
+        { "label": "Sign in with your Kimi account (kimi.com, mainland China)", "method": "acp", "command": "kimi", "args": ["acp", "--region", "mainland-cn"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": false, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" },
+        { "label": "Connect with your Kimi Code plan key", "method": "api", "format": "openai", "endpoint": "https://api.kimi.com/coding/v1", "models": ["kimi-for-coding"], "auth": "api-key", "connectionName": "Kimi Code (API key)", "verified": false, "docsUrl": "https://www.kimi.com/en/help/kimi-code/third-party-agents" }
       ]
     },
     {
       "id": "mistral",
+      "vendor": "mistral",
       "name": "Mistral",
       "category": "chat",
-      "evidence": { "envVars": ["MISTRAL_API_KEY"], "hosts": ["api.mistral.ai"], "executables": ["mistral-vibe", "vibe"], "packages": ["mistralai", "@mistralai/mistralai", "mistral-vibe"] },
+      "evidence": { "envVars": ["MISTRAL_API_KEY"], "hosts": ["api.mistral.ai"], "packages": ["mistralai", "@mistralai/mistralai"] },
       "description": "Mistral and Codestral models.",
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.mistral.ai/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "mistral-vibe",
+      "vendor": "mistral",
+      "name": "Mistral Vibe",
+      "category": "agent",
+      "description": "Mistral's coding agent in the terminal. AI Hub runs it through the Agent Client Protocol, signed in with your Mistral account.",
+      "evidence": { "executables": ["vibe-acp", "vibe", "mistral-vibe"], "packages": ["mistral-vibe"] },
+      "routes": [{ "label": "Sign in with your Mistral account", "method": "acp", "command": "vibe-acp", "args": [], "homeEnv": "VIBE_HOME", "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.mistral.ai/vibe/code/cli/install-setup" }]
     },
     {
       "id": "groq",
@@ -98,6 +126,7 @@
     },
     {
       "id": "xai",
+      "vendor": "xai",
       "keyPrefixes": ["xai-"],
       "name": "xAI Grok",
       "category": "chat",
@@ -153,6 +182,7 @@
     },
     {
       "id": "azure-openai",
+      "vendor": "microsoft",
       "name": "Azure OpenAI",
       "category": "chat",
       "description": "OpenAI models hosted in an Azure resource. The endpoint is specific to your resource.",
@@ -161,6 +191,7 @@
     },
     {
       "id": "bedrock",
+      "vendor": "amazon",
       "name": "Amazon Bedrock",
       "category": "chat",
       "description": "Models through AWS. Uses AWS credentials, not a single key.",
@@ -185,12 +216,23 @@
     },
     {
       "id": "qwen",
+      "vendor": "alibaba",
       "name": "Qwen (Alibaba DashScope)",
       "category": "chat",
       "description": "Qwen models over the DashScope OpenAI-compatible endpoint.",
-      "aliases": ["dashscope", "tongyi", "qwen code"],
-      "evidence": { "envVars": ["DASHSCOPE_API_KEY", "QWEN_API_KEY"], "hosts": ["dashscope.aliyuncs.com", "dashscope-intl.aliyuncs.com"], "executables": ["qwen"], "packages": ["@qwen-code/qwen-code"], "configPaths": [".qwen/settings.json"] },
+      "aliases": ["dashscope", "tongyi"],
+      "evidence": { "envVars": ["DASHSCOPE_API_KEY", "QWEN_API_KEY"], "hosts": ["dashscope.aliyuncs.com", "dashscope-intl.aliyuncs.com"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1", "auth": "api-key", "verified": false }]
+    },
+    {
+      "id": "qwen-code",
+      "vendor": "alibaba",
+      "name": "Qwen Code",
+      "category": "agent",
+      "description": "Alibaba's Qwen coding agent in the terminal. AI Hub runs it through the Agent Client Protocol.",
+      "aliases": ["qwen code"],
+      "evidence": { "executables": ["qwen"], "packages": ["@qwen-code/qwen-code"], "configPaths": [".qwen/settings.json"] },
+      "routes": [{ "label": "Sign in with your Qwen account", "method": "acp", "command": "qwen", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://qwenlm.github.io/qwen-code-docs/en/users/integration-jetbrains/" }]
     },
     {
       "id": "zhipu",
@@ -316,6 +358,7 @@
     },
     {
       "id": "claude-code",
+      "vendor": "anthropic",
       "name": "Claude Code",
       "category": "agent",
       "description": "Anthropic's coding agent. AI Hub runs it through the Agent SDK with your Claude subscription.",
@@ -324,6 +367,7 @@
     },
     {
       "id": "codex",
+      "vendor": "openai",
       "name": "Codex CLI",
       "category": "agent",
       "description": "OpenAI's coding agent. AI Hub runs it through its app server with your ChatGPT sign-in.",
@@ -332,19 +376,21 @@
     },
     {
       "id": "gemini-cli",
+      "vendor": "google",
       "name": "Gemini CLI",
       "category": "agent",
-      "description": "Google's terminal agent.",
+      "description": "Google's coding agent in the terminal. AI Hub runs it through the Agent Client Protocol.",
       "evidence": { "executables": ["gemini"], "packages": ["@google/gemini-cli"], "configPaths": [".gemini/settings.json"] },
-      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Gemini CLI has no stdin JSON protocol. Wrap it with a small script that reads {model,messages} and prints {text}, or connect the Gemini API directly.", "docsUrl": "https://github.com/google-gemini/gemini-cli" }]
+      "routes": [{ "label": "Sign in with your Google account", "method": "acp", "command": "gemini", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://geminicli.com/docs/cli/acp-mode/" }]
     },
     {
       "id": "copilot-cli",
+      "vendor": "github",
       "name": "GitHub Copilot",
       "category": "agent",
-      "description": "Copilot CLI and the Copilot editor extensions.",
+      "description": "GitHub's Copilot coding agent in the terminal, and the Copilot editor extensions. AI Hub runs the terminal agent through the Agent Client Protocol.",
       "evidence": { "executables": ["copilot", "github-copilot-cli"], "packages": ["@github/copilot"], "extensions": ["github.copilot", "github.copilot-chat"], "envVars": ["GITHUB_COPILOT_TOKEN"] },
-      "routes": [{ "label": "Copilot has no local API", "method": "api", "auth": "manual", "guidance": "Copilot runs inside its own editor or CLI. Use GitHub's MCP server to give AI Hub access to your repositories instead.", "docsUrl": "https://docs.github.com/copilot" }]
+      "routes": [{ "label": "Sign in with your GitHub account", "method": "acp", "command": "copilot", "args": ["--acp", "--stdio"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/acp-server" }]
     },
     {
       "id": "aider",
@@ -360,7 +406,10 @@
       "category": "agent",
       "description": "Open-source coding agent with a terminal UI and headless mode.",
       "evidence": { "executables": ["opencode"], "packages": ["opencode-ai"], "configPaths": [".config/opencode/opencode.json"], "apps": ["OpenCode"] },
-      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Run OpenCode in non-interactive mode through a wrapper that reads {model,messages} and prints {text}.", "docsUrl": "https://opencode.ai/docs/" }]
+      "routes": [
+        { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Run OpenCode in non-interactive mode through a wrapper that reads {model,messages} and prints {text}.", "docsUrl": "https://opencode.ai/docs/" },
+        { "label": "Connect as a coding agent", "method": "acp", "command": "opencode", "args": ["acp"], "auth": "signin", "kind": "local", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://opencode.ai/docs/acp/" }
+      ]
     },
     {
       "id": "goose",
@@ -368,15 +417,18 @@
       "category": "agent",
       "description": "Block's open-source agent with MCP extensions.",
       "evidence": { "executables": ["goose"], "apps": ["Goose"], "configPaths": ["Block/goose/config/config.yaml"] },
-      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Goose supports headless runs. Wrap it with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://block.github.io/goose/" }]
+      "routes": [
+        { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Goose supports headless runs. Wrap it with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://block.github.io/goose/" },
+        { "label": "Connect as a coding agent", "method": "acp", "command": "goose", "args": ["acp"], "auth": "signin", "kind": "local", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://goose-docs.ai/docs/gdk/acp/zed/" }
+      ]
     },
     {
       "id": "cursor",
       "name": "Cursor",
       "category": "agent",
-      "description": "AI code editor. Its MCP servers are read from its config.",
+      "description": "AI code editor with a terminal agent. AI Hub runs the agent through the Agent Client Protocol; the MCP servers configured in Cursor are listed separately.",
       "evidence": { "apps": ["Cursor"], "executables": ["cursor", "cursor-agent", "agent"], "configPaths": [".cursor/mcp.json"] },
-      "routes": [{ "label": "Cursor is an editor", "method": "mcp", "auth": "manual", "guidance": "Cursor has no chat API. Any MCP server configured in Cursor is listed separately with its own route.", "docsUrl": "https://docs.cursor.com" }]
+      "routes": [{ "label": "Sign in with your Cursor account", "method": "acp", "command": "agent", "args": ["acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://cursor.com/docs/cli/acp" }]
     },
     {
       "id": "windsurf",
@@ -425,7 +477,10 @@
       "category": "agent",
       "description": "Editor agent with a CLI.",
       "evidence": { "extensions": ["augment.vscode-augment"], "executables": ["auggie"], "packages": ["@augmentcode/auggie"] },
-      "routes": [{ "label": "Use the Auggie CLI as a bridge", "method": "cli", "auth": "manual", "guidance": "Wrap auggie with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://docs.augmentcode.com" }]
+      "routes": [
+        { "label": "Use the Auggie CLI as a bridge", "method": "cli", "auth": "manual", "guidance": "Wrap auggie with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://docs.augmentcode.com" },
+        { "label": "Sign in with your Augment account", "method": "acp", "command": "auggie", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.augmentcode.com/cli/acp" }
+      ]
     },
     {
       "id": "amp",
@@ -437,6 +492,7 @@
     },
     {
       "id": "antigravity-cli",
+      "vendor": "google",
       "name": "Antigravity CLI",
       "category": "agent",
       "description": "Google's Antigravity agent in the terminal (agy).",
@@ -457,15 +513,22 @@
       "category": "agent",
       "description": "Factory's terminal coding agent.",
       "aliases": ["factory droid"], "evidence": { "executables": ["droid"], "configPaths": [".factory/settings.json"] },
-      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap droid with a script that reads {model,messages} and prints {text}." }]
+      "routes": [
+        { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap droid with a script that reads {model,messages} and prints {text}." },
+        { "label": "Sign in with your Factory account", "method": "acp", "command": "droid", "args": ["exec", "--output-format", "acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.factory.ai/integrations/jetbrains" }
+      ]
     },
     {
       "id": "grok-cli",
-      "name": "Grok CLI",
+      "vendor": "xai",
+      "name": "Grok Build",
       "category": "agent",
       "description": "xAI's Grok agent in the terminal.",
       "evidence": { "executables": ["grok"], "configPaths": [".grok/config.toml"] },
-      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap grok with a script that reads {model,messages} and prints {text}." }]
+      "routes": [
+        { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap grok with a script that reads {model,messages} and prints {text}." },
+        { "label": "Sign in with your xAI account", "method": "acp", "command": "grok", "args": ["agent", "stdio"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.x.ai/build/overview" }
+      ]
     },
     {
       "id": "hermes",
@@ -473,15 +536,22 @@
       "category": "agent",
       "description": "Terminal agent with a plugin system and resumable sessions.",
       "aliases": ["hermes-agent"], "evidence": { "executables": ["hermes"], "configPaths": [".hermes/config.yaml"] },
-      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap hermes with a script that reads {model,messages} and prints {text}." }]
+      "routes": [
+        { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap hermes with a script that reads {model,messages} and prints {text}." },
+        { "label": "Connect as a coding agent", "method": "acp", "command": "hermes", "args": ["acp"], "auth": "signin", "kind": "local", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://hermes-agent.nousresearch.com/docs/user-guide/features/acp" }
+      ]
     },
     {
       "id": "kiro-cli",
+      "vendor": "amazon",
       "name": "Kiro CLI",
       "category": "agent",
       "description": "AWS's Kiro agent in the terminal.",
       "aliases": ["kiro"], "evidence": { "executables": ["kiro-cli"] },
-      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap kiro-cli with a script that reads {model,messages} and prints {text}." }]
+      "routes": [
+        { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap kiro-cli with a script that reads {model,messages} and prints {text}." },
+        { "label": "Sign in with your Kiro account", "method": "acp", "command": "kiro-cli", "args": ["acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://kiro.dev/docs/cli/acp/" }
+      ]
     },
     {
       "id": "letta-code",
@@ -541,6 +611,7 @@
     },
     {
       "id": "chatgpt-desktop",
+      "vendor": "openai",
       "name": "ChatGPT",
       "category": "desktop",
       "description": "OpenAI's desktop app and website. No local API.",
@@ -549,14 +620,16 @@
     },
     {
       "id": "claude-desktop",
+      "vendor": "anthropic",
       "name": "Claude Desktop",
       "category": "desktop",
       "description": "Anthropic's desktop app. Its MCP servers are read from its config.",
       "evidence": { "apps": ["Claude"], "configPaths": ["Claude/claude_desktop_config.json"] },
-      "routes": [{ "label": "Use Claude Code or the API instead", "method": "claude-code", "auth": "signin", "guidance": "The desktop app has no local API. Claude Code uses the same subscription and can be connected here; its MCP servers are listed separately." }]
+      "routes": [{ "label": "Use Claude Code or the API instead", "method": "claude-code", "auth": "manual", "guidance": "The desktop app has no local API. Claude Code uses the same subscription and can be connected here; its MCP servers are listed separately." }]
     },
     {
       "id": "copilot-desktop",
+      "vendor": "microsoft",
       "name": "Microsoft Copilot",
       "category": "desktop",
       "description": "Microsoft's assistant app. No local API.",
@@ -641,7 +714,7 @@
       "category": "media",
       "description": "Voice generation. Exposes an MCP server.",
       "evidence": { "envVars": ["ELEVENLABS_API_KEY", "ELEVEN_API_KEY"], "hosts": ["api.elevenlabs.io"], "packages": ["elevenlabs", "@elevenlabs/elevenlabs-js", "elevenlabs-mcp"] },
-      "routes": [{ "label": "Connect the ElevenLabs MCP server", "method": "mcp", "mcpTransport": "stdio", "command": "uvx", "args": ["elevenlabs-mcp"], "auth": "api-key", "guidance": "Needs ELEVENLABS_API_KEY in the server's environment.", "docsUrl": "https://github.com/elevenlabs/elevenlabs-mcp", "verified": false }]
+      "routes": [{ "label": "Connect the ElevenLabs MCP server", "method": "mcp", "mcpTransport": "stdio", "command": "uvx", "args": ["elevenlabs-mcp"], "runner": "uvx", "secretEnv": "ELEVENLABS_API_KEY", "auth": "api-key", "guidance": "Give your ElevenLabs API key here; AI Hub passes it to the server as ELEVENLABS_API_KEY.", "docsUrl": "https://github.com/elevenlabs/elevenlabs-mcp", "verified": false }]
     },
     {
       "id": "runway",
@@ -693,6 +766,7 @@
     },
     {
       "id": "github-mcp",
+      "vendor": "github",
       "name": "GitHub MCP server",
       "category": "tools",
       "description": "Repositories, issues and pull requests as tools.",
