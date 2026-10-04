@@ -1,27 +1,27 @@
 {
-  "version": "0.2.7",
-  "createdAt": "2026-10-01T14:40:46.182Z",
-  "commit": "c9b685e12951df721ae09650b05c531c11d5c5db",
+  "version": "0.2.8",
+  "createdAt": "2026-10-04T10:45:24.756Z",
+  "commit": "ad87f9c449acbfa6fabe113931f274a9e7c066a0",
   "node": "24.21.0",
-  "zip": "ai-hub-0.2.7-win32-x64.zip",
-  "size": 183228837,
-  "sha256": "7a7cf7212dd41bccad733cee68ed6dfc9e12ce92bdadaeabdb25420dc6dacb1d",
-  "url": "https://github.com/leosalexander-hash/ai-hub-published/releases/tag/v0.2.7",
+  "zip": "ai-hub-0.2.8-win32-x64.zip",
+  "size": 187586212,
+  "sha256": "690334154f378f69a4008d4a272cde634a18844127956713e9bc8618a0a1b25a",
+  "url": "https://github.com/leosalexander-hash/ai-hub-published/releases/tag/v0.2.8",
   "packages": {
     "win32-x64": {
-      "zip": "ai-hub-0.2.7-win32-x64.zip",
-      "size": 183228837,
-      "sha256": "7a7cf7212dd41bccad733cee68ed6dfc9e12ce92bdadaeabdb25420dc6dacb1d"
+      "zip": "ai-hub-0.2.8-win32-x64.zip",
+      "size": 187586212,
+      "sha256": "690334154f378f69a4008d4a272cde634a18844127956713e9bc8618a0a1b25a"
     },
     "darwin-arm64": {
-      "zip": "ai-hub-0.2.7-darwin-arm64.zip",
-      "size": 175121852,
-      "sha256": "1243b214632f1ba1590461bdd8fa3df54891e2111e7b56069f5dfb5702d3c2b4"
+      "zip": "ai-hub-0.2.8-darwin-arm64.zip",
+      "size": 179684644,
+      "sha256": "96469d799556e4687428e6ff81d761a405291743d5c35ff783b1d883ea73284f"
     },
     "linux-x64": {
-      "zip": "ai-hub-0.2.7-linux-x64.zip",
-      "size": 191483782,
-      "sha256": "0120f7dd852184b679c82109ad80735030213c35d3dfea8a27155abaab74bd38"
+      "zip": "ai-hub-0.2.8-linux-x64.zip",
+      "size": 196032259,
+      "sha256": "1d73e6dffc53c30526731a21b780da4279f92d29353a7e425188273d4089b9ee"
     }
   }
 }

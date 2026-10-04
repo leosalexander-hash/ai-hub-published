@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-27",
+  "version": "2026-10-04.2",
   "note": "Known AI platforms with the evidence that reveals them on a machine and the route to connect each one. Adding a platform is a change to this file. Routes with verified=false are written from vendor documentation and have not been exercised through AI Hub yet; the card says so. Values of keys are never read by the scanner; only variable names.",
   "vendors": [
     { "id": "anthropic", "name": "Claude", "company": "Anthropic" },
@@ -22,6 +22,7 @@
       "category": "chat",
       "description": "GPT models over the OpenAI API.",
       "aliases": ["chatgpt api"],
+      "websites": ["openai.com", "chatgpt.com", "chat.openai.com", "platform.openai.com", "developers.openai.com", "learn.chatgpt.com"],
       "evidence": { "envVars": ["OPENAI_API_KEY"], "hosts": ["api.openai.com"], "packages": ["openai", "@openai/openai"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.openai.com/v1", "auth": "api-key", "verified": false }]
     },
@@ -32,6 +33,7 @@
       "name": "Anthropic",
       "category": "chat",
       "description": "Claude models over the Anthropic Messages API.",
+      "websites": ["anthropic.com", "claude.ai", "claude.com", "platform.claude.com", "code.claude.com", "docs.claude.com"],
       "evidence": { "envVars": ["ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN"], "hosts": ["api.anthropic.com"], "packages": ["anthropic", "@anthropic-ai/sdk"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "anthropic", "endpoint": "https://api.anthropic.com", "auth": "api-key", "verified": false }]
     },
@@ -43,6 +45,7 @@
       "category": "chat",
       "description": "Gemini models over the Google AI API.",
       "aliases": ["google ai studio", "generative language"],
+      "websites": ["gemini.google.com", "aistudio.google.com", "ai.google.dev", "geminicli.com"],
       "evidence": { "envVars": ["GEMINI_API_KEY", "GOOGLE_API_KEY", "GOOGLE_GENAI_API_KEY"], "hosts": ["generativelanguage.googleapis.com"], "packages": ["google-generativeai", "google-genai", "@google/genai", "@google/generative-ai"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "gemini", "endpoint": "https://generativelanguage.googleapis.com/v1beta", "auth": "api-key", "verified": false }]
     },
@@ -53,6 +56,7 @@
       "category": "chat",
       "description": "Kimi K3 and K2 models. OpenAI-compatible at /v1, Anthropic-compatible at /anthropic.",
       "aliases": ["moonshot"],
+      "websites": ["kimi.com", "www.kimi.com", "www.kimi.ai", "platform.kimi.ai"],
       "evidence": { "envVars": ["MOONSHOT_API_KEY", "KIMI_API_KEY"], "hosts": ["api.moonshot.ai", "api.moonshot.cn"], "apps": ["Kimi"], "executables": ["kimi-daimon", "daimon"], "packages": ["@kimi/daimon"] },
       "routes": [
         { "label": "Connect with API key (OpenAI format)", "method": "api", "format": "openai", "endpoint": "https://api.moonshot.ai/v1", "auth": "api-key", "verified": true, "guidance": "The Kimi desktop app cannot be driven from outside, so an API key is the way in here. Kimi Code, the coding agent, is connected by signing in with your Kimi account.", "docsUrl": "https://platform.kimi.ai/console/api-keys" },
@@ -73,10 +77,11 @@
       "name": "Kimi Code",
       "category": "agent",
       "description": "Moonshot AI's coding agent. AI Hub runs its command-line program through the Agent Client Protocol, signed in with your Kimi account (free or subscription).",
+      "websites": ["code.kimi.com"],
       "evidence": { "apps": ["Kimi Code"], "executables": ["kimi", "kimi-code"], "packages": ["@moonshot-ai/kimi-code", "kimi-code", "kimi-cli"], "configPaths": [".kimi-code/config.toml"] },
       "routes": [
-        { "label": "Sign in to Kimi International", "connectionName": "Kimi International", "method": "acp", "command": "kimi", "args": ["acp", "--region", "global"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": false, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" },
-        { "label": "Sign in to Kimi Mainland China (mainland accounts only)", "connectionName": "Kimi Mainland China", "method": "acp", "command": "kimi", "args": ["acp", "--region", "mainland-cn"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": false, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" },
+        { "label": "Sign in to Kimi International", "connectionName": "Kimi International", "method": "acp", "command": "kimi", "args": ["acp", "--region", "global"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": false, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html", "install": { "npm": "@moonshot-ai/kimi-code", "page": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" } },
+        { "label": "Sign in to Kimi Mainland China (mainland accounts only)", "connectionName": "Kimi Mainland China", "method": "acp", "command": "kimi", "args": ["acp", "--region", "mainland-cn"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": false, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html", "install": { "npm": "@moonshot-ai/kimi-code", "page": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" } },
         { "label": "Connect with your Kimi Code plan key", "method": "api", "format": "openai", "endpoint": "https://api.kimi.com/coding/v1", "models": ["kimi-for-coding"], "auth": "api-key", "connectionName": "Kimi Code (API key)", "verified": false, "docsUrl": "https://www.kimi.com/en/help/kimi-code/third-party-agents" }
       ]
     },
@@ -85,6 +90,7 @@
       "vendor": "mistral",
       "name": "Mistral",
       "category": "chat",
+      "websites": ["mistral.ai", "chat.mistral.ai", "console.mistral.ai", "docs.mistral.ai"],
       "evidence": { "envVars": ["MISTRAL_API_KEY"], "hosts": ["api.mistral.ai"], "packages": ["mistralai", "@mistralai/mistralai"] },
       "description": "Mistral and Codestral models.",
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.mistral.ai/v1", "auth": "api-key", "verified": false }]
@@ -96,7 +102,7 @@
       "category": "agent",
       "description": "Mistral's coding agent in the terminal. AI Hub runs it through the Agent Client Protocol, signed in with your Mistral account.",
       "evidence": { "executables": ["vibe-acp", "vibe", "mistral-vibe"], "packages": ["mistral-vibe"] },
-      "routes": [{ "label": "Sign in with your Mistral account", "method": "acp", "command": "vibe-acp", "args": [], "homeEnv": "VIBE_HOME", "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.mistral.ai/vibe/code/cli/install-setup" }]
+      "routes": [{ "label": "Sign in with your Mistral account", "method": "acp", "command": "vibe-acp", "args": [], "homeEnv": "VIBE_HOME", "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.mistral.ai/vibe/code/cli/install-setup", "install": { "page": "https://docs.mistral.ai/vibe/code/cli/install-setup" } }]
     },
     {
       "id": "groq",
@@ -104,6 +110,7 @@
       "name": "Groq",
       "category": "chat",
       "description": "Fast inference for open models.",
+      "websites": ["groq.com", "console.groq.com"],
       "evidence": { "envVars": ["GROQ_API_KEY"], "hosts": ["api.groq.com"], "packages": ["groq", "groq-sdk"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.groq.com/openai/v1", "auth": "api-key", "verified": false }]
     },
@@ -112,8 +119,9 @@
       "name": "DeepSeek",
       "category": "chat",
       "description": "DeepSeek chat and reasoner models.",
+      "websites": ["deepseek.com", "chat.deepseek.com", "platform.deepseek.com", "api-docs.deepseek.com"],
       "evidence": { "envVars": ["DEEPSEEK_API_KEY"], "hosts": ["api.deepseek.com"] },
-      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.deepseek.com/v1", "auth": "api-key", "verified": false }]
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.deepseek.com", "key": "r-71ec4cbdd519", "auth": "api-key", "verified": false }]
     },
     {
       "id": "openrouter",
@@ -121,6 +129,7 @@
       "name": "OpenRouter",
       "category": "chat",
       "description": "One key for hundreds of models from many vendors.",
+      "websites": ["openrouter.ai"],
       "evidence": { "envVars": ["OPENROUTER_API_KEY"], "hosts": ["openrouter.ai"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://openrouter.ai/api/v1", "auth": "api-key", "verified": false }]
     },
@@ -132,6 +141,7 @@
       "category": "chat",
       "description": "Grok models over the xAI API.",
       "aliases": ["grok"],
+      "websites": ["x.ai", "grok.com", "console.x.ai", "docs.x.ai"],
       "evidence": { "envVars": ["XAI_API_KEY", "GROK_API_KEY"], "hosts": ["api.x.ai"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.x.ai/v1", "auth": "api-key", "verified": false }]
     },
@@ -140,22 +150,25 @@
       "name": "Cohere",
       "category": "chat",
       "description": "Command models over Cohere's OpenAI-compatible endpoint.",
+      "websites": ["cohere.com", "dashboard.cohere.com", "docs.cohere.com"],
       "evidence": { "envVars": ["COHERE_API_KEY", "CO_API_KEY"], "hosts": ["api.cohere.com", "api.cohere.ai"], "packages": ["cohere", "cohere-ai"] },
-      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.cohere.com/compatibility/v1", "auth": "api-key", "verified": false }]
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.cohere.ai/compatibility/v1", "key": "r-2ab47c27b4f2", "auth": "api-key", "verified": false }]
     },
     {
       "id": "together",
       "name": "Together AI",
       "category": "chat",
       "description": "Hosted open models.",
-      "evidence": { "envVars": ["TOGETHER_API_KEY", "TOGETHERAI_API_KEY"], "hosts": ["api.together.xyz"], "packages": ["together", "together-ai"] },
-      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.together.xyz/v1", "auth": "api-key", "verified": false }]
+      "websites": ["together.ai", "docs.together.ai", "api.together.ai"],
+      "evidence": { "envVars": ["TOGETHER_API_KEY", "TOGETHERAI_API_KEY"], "hosts": ["api.together.ai", "api.together.xyz"], "packages": ["together", "together-ai"] },
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.together.ai/v1", "key": "r-e5396df67851", "auth": "api-key", "verified": false }]
     },
     {
       "id": "fireworks",
       "name": "Fireworks AI",
       "category": "chat",
       "description": "Hosted open models with fast inference.",
+      "websites": ["fireworks.ai", "docs.fireworks.ai"],
       "evidence": { "envVars": ["FIREWORKS_API_KEY"], "hosts": ["api.fireworks.ai"], "packages": ["fireworks-ai"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.fireworks.ai/inference/v1", "auth": "api-key", "verified": false }]
     },
@@ -164,10 +177,11 @@
       "keyPrefixes": ["pplx-"],
       "name": "Perplexity",
       "category": "chat",
-      "description": "Sonar models with web search. The desktop app has no local API.",
+      "description": "Open-weight models hosted by Perplexity, over its Router API in the OpenAI format. The desktop app has no local API.",
+      "websites": ["perplexity.ai", "www.perplexity.ai", "console.perplexity.ai", "docs.perplexity.ai"],
       "evidence": { "envVars": ["PERPLEXITY_API_KEY", "PPLX_API_KEY"], "hosts": ["api.perplexity.ai"], "apps": ["Perplexity"] },
       "routes": [
-        { "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.perplexity.ai", "auth": "api-key", "verified": false },
+        { "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.perplexity.ai/router/v1", "key": "r-8bf0966d75f0", "auth": "api-key", "verified": false },
         { "label": "Desktop app only", "method": "api", "auth": "manual", "guidance": "The Perplexity app has no local API. Create an API key at perplexity.ai/settings/api, then use the API route.", "docsUrl": "https://docs.perplexity.ai" }
       ]
     },
@@ -186,6 +200,7 @@
       "name": "Azure OpenAI",
       "category": "chat",
       "description": "OpenAI models hosted in an Azure resource. The endpoint is specific to your resource.",
+      "websites": ["ai.azure.com"],
       "evidence": { "envVars": ["AZURE_OPENAI_API_KEY", "AZURE_OPENAI_ENDPOINT"], "hosts": ["openai.azure.com", "cognitiveservices.azure.com"] },
       "routes": [{ "label": "Enter your Azure endpoint", "method": "api", "format": "openai", "auth": "api-key", "guidance": "Use your resource URL with /openai/v1 appended, and the key from the Azure portal.", "docsUrl": "https://learn.microsoft.com/azure/ai-services/openai/" }]
     },
@@ -203,6 +218,7 @@
       "name": "Cerebras",
       "category": "chat",
       "description": "Very fast inference for open models.",
+      "websites": ["cerebras.ai", "cloud.cerebras.ai", "inference-docs.cerebras.ai"],
       "evidence": { "envVars": ["CEREBRAS_API_KEY"], "hosts": ["api.cerebras.ai"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.cerebras.ai/v1", "auth": "api-key", "verified": false }]
     },
@@ -211,6 +227,7 @@
       "name": "SambaNova",
       "category": "chat",
       "description": "Hosted open models.",
+      "websites": ["sambanova.ai", "docs.sambanova.ai"],
       "evidence": { "envVars": ["SAMBANOVA_API_KEY"], "hosts": ["api.sambanova.ai"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.sambanova.ai/v1", "auth": "api-key", "verified": false }]
     },
@@ -221,6 +238,7 @@
       "category": "chat",
       "description": "Qwen models over the DashScope OpenAI-compatible endpoint.",
       "aliases": ["dashscope", "tongyi"],
+      "websites": ["qwen.ai", "chat.qwen.ai", "modelstudio.console.alibabacloud.com"],
       "evidence": { "envVars": ["DASHSCOPE_API_KEY", "QWEN_API_KEY"], "hosts": ["dashscope.aliyuncs.com", "dashscope-intl.aliyuncs.com"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1", "auth": "api-key", "verified": false }]
     },
@@ -229,10 +247,11 @@
       "vendor": "alibaba",
       "name": "Qwen Code",
       "category": "agent",
-      "description": "Alibaba's Qwen coding agent in the terminal. AI Hub runs it through the Agent Client Protocol.",
+      "description": "Alibaba's Qwen coding agent in the terminal, used with your Alibaba Cloud Coding Plan key or an API key set up in Qwen Code (its account sign-in ended on 15 April 2026). AI Hub runs it through the Agent Client Protocol.",
       "aliases": ["qwen code"],
+      "websites": ["qwenlm.github.io"],
       "evidence": { "executables": ["qwen"], "packages": ["@qwen-code/qwen-code"], "configPaths": [".qwen/settings.json"] },
-      "routes": [{ "label": "Sign in with your Qwen account", "method": "acp", "command": "qwen", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://qwenlm.github.io/qwen-code-docs/en/users/integration-jetbrains/" }]
+      "routes": [{ "label": "Use Qwen Code with your Coding Plan or API key", "method": "acp", "command": "qwen", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://qwenlm.github.io/qwen-code-docs/en/users/configuration/auth/", "install": { "npm": "@qwen-code/qwen-code", "page": "https://github.com/QwenLM/qwen-code" } }]
     },
     {
       "id": "zhipu",
@@ -240,6 +259,7 @@
       "category": "chat",
       "description": "GLM models over the Zhipu open platform.",
       "aliases": ["bigmodel", "z.ai"],
+      "websites": ["z.ai", "chat.z.ai", "docs.z.ai", "zcode.z.ai", "bigmodel.cn", "open.bigmodel.cn"],
       "evidence": { "envVars": ["ZHIPU_API_KEY", "ZHIPUAI_API_KEY", "ZAI_API_KEY"], "hosts": ["open.bigmodel.cn", "api.z.ai"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.z.ai/api/paas/v4", "auth": "api-key", "verified": false }]
     },
@@ -248,6 +268,7 @@
       "name": "MiniMax",
       "category": "chat",
       "description": "MiniMax text and speech models.",
+      "websites": ["minimax.io", "platform.minimax.io", "agent.minimax.io", "minimaxi.com"],
       "evidence": { "envVars": ["MINIMAX_API_KEY"], "hosts": ["api.minimax.io", "api.minimaxi.com"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.minimax.io/v1", "auth": "api-key", "verified": false }]
     },
@@ -256,6 +277,7 @@
       "name": "NVIDIA NIM",
       "category": "chat",
       "description": "Hosted models on NVIDIA's API catalog.",
+      "websites": ["build.nvidia.com", "docs.api.nvidia.com"],
       "evidence": { "envVars": ["NVIDIA_API_KEY", "NVIDIA_NIM_API_KEY"], "hosts": ["integrate.api.nvidia.com"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://integrate.api.nvidia.com/v1", "auth": "api-key", "verified": false }]
     },
@@ -264,6 +286,7 @@
       "name": "DeepInfra",
       "category": "chat",
       "description": "Hosted open models.",
+      "websites": ["deepinfra.com", "docs.deepinfra.com"],
       "evidence": { "envVars": ["DEEPINFRA_API_KEY", "DEEPINFRA_API_TOKEN"], "hosts": ["api.deepinfra.com"] },
       "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.deepinfra.com/v1/openai", "auth": "api-key", "verified": false }]
     },
@@ -272,14 +295,16 @@
       "name": "Novita AI",
       "category": "chat",
       "description": "Hosted open models and media generation.",
+      "websites": ["novita.ai", "docs.novita.ai"],
       "evidence": { "envVars": ["NOVITA_API_KEY"], "hosts": ["api.novita.ai"] },
-      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.novita.ai/v3/openai", "auth": "api-key", "verified": false }]
+      "routes": [{ "label": "Connect with API key", "method": "api", "format": "openai", "endpoint": "https://api.novita.ai/openai", "key": "r-b69d00c46225", "auth": "api-key", "verified": false }]
     },
     {
       "id": "litellm",
       "name": "LiteLLM proxy",
       "category": "local-server",
       "description": "A local gateway that exposes many vendors behind one OpenAI-compatible endpoint.",
+      "websites": ["litellm.ai", "docs.litellm.ai"],
       "evidence": { "executables": ["litellm"], "packages": ["litellm"], "ports": [4000], "envVars": ["LITELLM_API_KEY", "LITELLM_PROXY_API_KEY"] },
       "routes": [{ "label": "Connect to the local proxy", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:4000/v1", "auth": "api-key", "verified": false }]
     },
@@ -288,14 +313,19 @@
       "name": "Ollama",
       "category": "local-server",
       "description": "Local models served on this computer. No key needed.",
+      "websites": ["ollama.com", "docs.ollama.com"],
       "evidence": { "executables": ["ollama"], "ports": [11434], "apps": ["Ollama"], "envVars": ["OLLAMA_HOST", "OLLAMA_API_KEY"], "packages": ["ollama"] },
-      "routes": [{ "label": "Connect to Ollama", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:11434/v1", "auth": "none", "verified": false }]
+      "routes": [
+        { "label": "Connect to Ollama", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:11434/v1", "auth": "none", "verified": false },
+        { "label": "Connect to Ollama's cloud with an API key", "connectionName": "Ollama Cloud", "method": "api", "format": "openai", "endpoint": "https://ollama.com/v1", "auth": "api-key", "verified": false, "docsUrl": "https://docs.ollama.com/cloud" }
+      ]
     },
     {
       "id": "lmstudio",
       "name": "LM Studio",
       "category": "local-server",
       "description": "Local models with a built-in OpenAI-compatible server.",
+      "websites": ["lmstudio.ai"],
       "evidence": { "executables": ["lms"], "ports": [1234], "apps": ["LM Studio"], "configPaths": [".lmstudio/mcp.json"] },
       "routes": [{ "label": "Connect to LM Studio's server", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:1234/v1", "auth": "none", "verified": false }]
     },
@@ -304,6 +334,7 @@
       "name": "Jan",
       "category": "local-server",
       "description": "Local chat app with an OpenAI-compatible server.",
+      "websites": ["jan.ai", "www.jan.ai"],
       "evidence": { "ports": [1337], "apps": ["Jan"] },
       "routes": [{ "label": "Connect to Jan's server", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:1337/v1", "auth": "none", "verified": false }]
     },
@@ -312,6 +343,7 @@
       "name": "vLLM",
       "category": "local-server",
       "description": "High-throughput model server.",
+      "websites": ["vllm.ai", "docs.vllm.ai"],
       "evidence": { "executables": ["vllm"], "packages": ["vllm"], "ports": [8000] },
       "routes": [{ "label": "Connect to the vLLM server", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:8000/v1", "auth": "none", "verified": false }]
     },
@@ -329,6 +361,7 @@
       "name": "LocalAI",
       "category": "local-server",
       "description": "Drop-in local replacement for the OpenAI API.",
+      "websites": ["localai.io"],
       "evidence": { "executables": ["local-ai"], "ports": [8080] },
       "routes": [{ "label": "Connect to LocalAI", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:8080/v1", "auth": "none", "verified": false }]
     },
@@ -337,6 +370,7 @@
       "name": "GPT4All",
       "category": "local-server",
       "description": "Local chat app with an optional API server.",
+      "websites": ["nomic.ai", "docs.gpt4all.io"],
       "evidence": { "apps": ["GPT4All"], "ports": [4891] },
       "routes": [{ "label": "Connect to GPT4All's server", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:4891/v1", "auth": "none", "verified": false }]
     },
@@ -363,7 +397,7 @@
       "category": "agent",
       "description": "Anthropic's coding agent. AI Hub runs it through the Agent SDK with your Claude subscription.",
       "evidence": { "executables": ["claude"], "packages": ["@anthropic-ai/claude-code"], "configPaths": [".claude.json", ".claude/settings.json"] },
-      "routes": [{ "label": "Sign in with your Claude subscription", "method": "claude-code", "auth": "signin", "verified": true }]
+      "routes": [{ "label": "Sign in with your Claude subscription", "method": "claude-code", "auth": "signin", "verified": true, "install": { "page": "https://code.claude.com/docs/en/setup" } }]
     },
     {
       "id": "codex",
@@ -372,7 +406,7 @@
       "category": "agent",
       "description": "OpenAI's coding agent. AI Hub runs it through its app server with your ChatGPT sign-in.",
       "evidence": { "executables": ["codex"], "packages": ["@openai/codex"], "configPaths": [".codex/config.toml"], "apps": ["OpenAI.Codex"] },
-      "routes": [{ "label": "Sign in with your ChatGPT account", "method": "codex", "auth": "signin", "verified": true }]
+      "routes": [{ "label": "Sign in with your ChatGPT account", "method": "codex", "auth": "signin", "verified": true, "install": { "page": "https://github.com/openai/codex/releases/latest" } }]
     },
     {
       "id": "gemini-cli",
@@ -381,7 +415,7 @@
       "category": "agent",
       "description": "Google's coding agent in the terminal. AI Hub runs it through the Agent Client Protocol.",
       "evidence": { "executables": ["gemini"], "packages": ["@google/gemini-cli"], "configPaths": [".gemini/settings.json"] },
-      "routes": [{ "label": "Sign in with your Google account", "method": "acp", "command": "gemini", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://geminicli.com/docs/cli/acp-mode/" }]
+      "routes": [{ "label": "Sign in with your Google account in Gemini CLI", "connectionName": "Gemini CLI", "method": "acp", "command": "gemini", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://geminicli.com/docs/cli/acp-mode/", "install": { "npm": "@google/gemini-cli", "page": "https://geminicli.com/docs/get-started/installation/" } }]
     },
     {
       "id": "copilot-cli",
@@ -390,13 +424,14 @@
       "category": "agent",
       "description": "GitHub's Copilot coding agent in the terminal, and the Copilot editor extensions. AI Hub runs the terminal agent through the Agent Client Protocol.",
       "evidence": { "executables": ["copilot", "github-copilot-cli"], "packages": ["@github/copilot"], "extensions": ["github.copilot", "github.copilot-chat"], "envVars": ["GITHUB_COPILOT_TOKEN"] },
-      "routes": [{ "label": "Sign in with your GitHub account", "method": "acp", "command": "copilot", "args": ["--acp", "--stdio"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/acp-server" }]
+      "routes": [{ "label": "Sign in with your GitHub account", "method": "acp", "command": "copilot", "args": ["--acp", "--stdio"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/acp-server", "install": { "npm": "@github/copilot", "page": "https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-cli" } }]
     },
     {
       "id": "aider",
       "name": "Aider",
       "category": "agent",
       "description": "Terminal pair-programming agent.",
+      "websites": ["aider.chat"],
       "evidence": { "executables": ["aider"], "packages": ["aider-chat", "aider-install"] },
       "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Aider takes its own flags. Wrap it with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://aider.chat/docs/" }]
     },
@@ -405,10 +440,11 @@
       "name": "OpenCode",
       "category": "agent",
       "description": "Open-source coding agent with a terminal UI and headless mode.",
+      "websites": ["opencode.ai"],
       "evidence": { "executables": ["opencode"], "packages": ["opencode-ai"], "configPaths": [".config/opencode/opencode.json"], "apps": ["OpenCode"] },
       "routes": [
         { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Run OpenCode in non-interactive mode through a wrapper that reads {model,messages} and prints {text}.", "docsUrl": "https://opencode.ai/docs/" },
-        { "label": "Connect as a coding agent", "method": "acp", "command": "opencode", "args": ["acp"], "auth": "signin", "kind": "local", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://opencode.ai/docs/acp/" }
+        { "label": "Connect as a coding agent", "method": "acp", "command": "opencode", "args": ["acp"], "auth": "signin", "kind": "local", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://opencode.ai/docs/acp/", "install": { "page": "https://opencode.ai/docs/" } }
       ]
     },
     {
@@ -416,10 +452,11 @@
       "name": "Goose",
       "category": "agent",
       "description": "Block's open-source agent with MCP extensions.",
+      "websites": ["goose-docs.ai"],
       "evidence": { "executables": ["goose"], "apps": ["Goose"], "configPaths": ["Block/goose/config/config.yaml"] },
       "routes": [
         { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Goose supports headless runs. Wrap it with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://block.github.io/goose/" },
-        { "label": "Connect as a coding agent", "method": "acp", "command": "goose", "args": ["acp"], "auth": "signin", "kind": "local", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://goose-docs.ai/docs/gdk/acp/zed/" }
+        { "label": "Connect as a coding agent", "method": "acp", "command": "goose", "args": ["acp"], "auth": "signin", "kind": "local", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://goose-docs.ai/docs/gdk/acp/zed/", "install": { "page": "https://goose-docs.ai/docs/quickstart" } }
       ]
     },
     {
@@ -427,23 +464,26 @@
       "name": "Cursor",
       "category": "agent",
       "description": "AI code editor with a terminal agent. AI Hub runs the agent through the Agent Client Protocol; the MCP servers configured in Cursor are listed separately.",
+      "websites": ["cursor.com"],
       "evidence": { "apps": ["Cursor"], "executables": ["cursor", "cursor-agent", "agent"], "configPaths": [".cursor/mcp.json"] },
-      "routes": [{ "label": "Sign in with your Cursor account", "method": "acp", "command": "agent", "args": ["acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://cursor.com/docs/cli/acp" }]
+      "routes": [{ "label": "Sign in with your Cursor account", "method": "acp", "command": "agent", "args": ["acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://cursor.com/docs/cli/acp", "install": { "page": "https://cursor.com/docs/cli/installation" } }]
     },
     {
       "id": "windsurf",
-      "name": "Windsurf",
+      "name": "Devin Desktop (formerly Windsurf)",
       "category": "agent",
-      "description": "AI code editor by Codeium. Its MCP servers are read from its config.",
+      "description": "Cognition's AI code editor, formerly Windsurf. Its MCP servers are read from its config.",
       "aliases": ["codeium"],
-      "evidence": { "apps": ["Windsurf"], "configPaths": [".codeium/windsurf/mcp_config.json"] },
-      "routes": [{ "label": "Windsurf is an editor", "method": "mcp", "auth": "manual", "guidance": "Windsurf has no chat API. Its MCP servers are listed separately.", "docsUrl": "https://docs.windsurf.com" }]
+      "websites": ["windsurf.com", "devin.ai", "docs.devin.ai", "docs.windsurf.com"],
+      "evidence": { "apps": ["Windsurf"], "configPaths": [".codeium/windsurf/mcp_config.json", "devin/mcp_config.json", ".codeium/mcp_config.json"] },
+      "routes": [{ "label": "Devin Desktop is an editor", "method": "mcp", "auth": "manual", "guidance": "Devin Desktop has no chat API. Its MCP servers are listed separately.", "docsUrl": "https://docs.devin.ai/desktop" }]
     },
     {
       "id": "cline",
       "name": "Cline",
       "category": "agent",
       "description": "VS Code coding agent extension.",
+      "websites": ["cline.bot", "docs.cline.bot"],
       "evidence": { "extensions": ["saoudrizwan.claude-dev"], "configPaths": ["Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json"] },
       "routes": [{ "label": "Cline runs inside VS Code", "method": "mcp", "auth": "manual", "guidance": "Cline has no API of its own. Its MCP servers are listed separately.", "docsUrl": "https://docs.cline.bot" }]
     },
@@ -451,15 +491,17 @@
       "id": "roo-code",
       "name": "Roo Code",
       "category": "agent",
-      "description": "VS Code coding agent extension.",
+      "description": "Roo Code's company shut it down on 15 May 2026.",
+      "websites": ["roocode.com"],
       "evidence": { "extensions": ["rooveterinaryinc.roo-cline"], "configPaths": ["Code/User/globalStorage/rooveterinaryinc.roo-cline/settings/mcp_settings.json"] },
-      "routes": [{ "label": "Roo Code runs inside VS Code", "method": "mcp", "auth": "manual", "guidance": "Roo Code has no API of its own. Its MCP servers are listed separately.", "docsUrl": "https://docs.roocode.com" }]
+      "routes": [{ "label": "Roo Code has shut down", "method": "mcp", "auth": "manual", "guidance": "Roo Code's company shut it down on 15 May 2026. Any MCP servers it still has set up are listed separately.", "docsUrl": "https://docs.roocode.com/sunset" }]
     },
     {
       "id": "kilo-code",
       "name": "Kilo Code",
       "category": "agent",
       "description": "VS Code coding agent extension.",
+      "websites": ["kilo.ai"],
       "evidence": { "extensions": ["kilocode.kilo-code"] },
       "routes": [{ "label": "Kilo Code runs inside VS Code", "method": "mcp", "auth": "manual", "guidance": "Kilo Code has no API of its own. Its MCP servers are listed separately.", "docsUrl": "https://kilocode.ai/docs" }]
     },
@@ -468,6 +510,7 @@
       "name": "Continue",
       "category": "agent",
       "description": "Open-source editor assistant.",
+      "websites": ["continue.dev", "docs.continue.dev"],
       "evidence": { "extensions": ["continue.continue"], "configPaths": [".continue/config.yaml", ".continue/config.json"] },
       "routes": [{ "label": "Continue runs inside the editor", "method": "api", "auth": "manual", "guidance": "Continue has no API of its own. The providers configured in its config file can be connected here directly.", "docsUrl": "https://docs.continue.dev" }]
     },
@@ -476,10 +519,11 @@
       "name": "Augment Code",
       "category": "agent",
       "description": "Editor agent with a CLI.",
+      "websites": ["www.augmentcode.com", "docs.augmentcode.com"],
       "evidence": { "extensions": ["augment.vscode-augment"], "executables": ["auggie"], "packages": ["@augmentcode/auggie"] },
       "routes": [
         { "label": "Use the Auggie CLI as a bridge", "method": "cli", "auth": "manual", "guidance": "Wrap auggie with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://docs.augmentcode.com" },
-        { "label": "Sign in with your Augment account", "method": "acp", "command": "auggie", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.augmentcode.com/cli/acp" }
+        { "label": "Sign in with your Augment account", "method": "acp", "command": "auggie", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.augmentcode.com/cli/acp", "install": { "npm": "@augmentcode/auggie", "page": "https://docs.augmentcode.com/cli/overview" } }
       ]
     },
     {
@@ -487,6 +531,7 @@
       "name": "Amp",
       "category": "agent",
       "description": "Sourcegraph's coding agent CLI.",
+      "websites": ["ampcode.com"],
       "evidence": { "executables": ["amp"], "packages": ["@sourcegraph/amp"] },
       "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap amp's execute mode with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://ampcode.com/manual" }]
     },
@@ -495,27 +540,46 @@
       "vendor": "google",
       "name": "Antigravity CLI",
       "category": "agent",
-      "description": "Google's Antigravity agent in the terminal (agy).",
+      "description": "Google's Antigravity agent in the terminal (agy). AI Hub drives it in its headless mode with your Google account.",
+      "websites": ["antigravity.google"],
       "aliases": ["antigravity", "agy"], "evidence": { "executables": ["agy"] },
-      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap agy with a script that reads {model,messages} and prints {text}." }]
+      "routes": [
+        { "label": "Sign in with your Google account in Antigravity", "connectionName": "Antigravity", "method": "headless", "command": "agy", "auth": "signin", "verified": false, "guidance": "Needs Antigravity's command-line program, which the scan did not find. Install it with the page linked here, then scan again.", "docsUrl": "https://antigravity.google/docs/cli/headless/", "install": { "page": "https://antigravity.google/docs/cli/install/" },
+          "headless": {
+            "args": ["--input-format", "stream-json", "--output-format", "stream-json"],
+            "input": { "line": { "event": "user", "message": { "content": "" } }, "path": "message.content" },
+            "event": "event",
+            "text": { "event": "step_update", "path": "step_update.text_delta", "when": { "path": "step_update.step_type", "equals": "agent_response" } },
+            "result": { "event": "result", "status": "result.status", "ok": ["SUCCESS"], "error": "result.error", "response": "result.response", "usage": "result.usage" },
+            "model": "--model",
+            "models": { "args": ["models"] },
+            "signin": { "args": [] }
+          } },
+        { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap agy with a script that reads {model,messages} and prints {text}." }
+      ]
     },
     {
       "id": "devin-cli",
       "name": "Devin CLI",
       "category": "agent",
-      "description": "Cognition's Devin agent in the terminal.",
+      "description": "Cognition's Devin agent in the terminal. AI Hub runs it through the Agent Client Protocol with your Devin account.",
+      "websites": ["cli.devin.ai"],
       "aliases": ["devin"], "evidence": { "executables": ["devin"], "configPaths": [".config/devin/config.json", "devin/config.json"] },
-      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap devin with a script that reads {model,messages} and prints {text}." }]
+      "routes": [
+        { "label": "Sign in with your Devin account", "method": "acp", "command": "devin", "args": ["acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.devin.ai/cli/reference/commands", "install": { "page": "https://docs.devin.ai/cli" } },
+        { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap devin with a script that reads {model,messages} and prints {text}." }
+      ]
     },
     {
       "id": "droid",
       "name": "Droid",
       "category": "agent",
       "description": "Factory's terminal coding agent.",
+      "websites": ["factory.com", "docs.factory.com", "app.factory.ai"],
       "aliases": ["factory droid"], "evidence": { "executables": ["droid"], "configPaths": [".factory/settings.json"] },
       "routes": [
         { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap droid with a script that reads {model,messages} and prints {text}." },
-        { "label": "Sign in with your Factory account", "method": "acp", "command": "droid", "args": ["exec", "--output-format", "acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.factory.ai/integrations/jetbrains" }
+        { "label": "Sign in with your Factory account", "method": "acp", "command": "droid", "args": ["exec", "--output-format", "acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.factory.ai/integrations/jetbrains", "install": { "npm": "droid", "page": "https://docs.factory.com/reference/cli-reference" } }
       ]
     },
     {
@@ -527,7 +591,7 @@
       "evidence": { "executables": ["grok"], "configPaths": [".grok/config.toml"] },
       "routes": [
         { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap grok with a script that reads {model,messages} and prints {text}." },
-        { "label": "Sign in with your xAI account", "method": "acp", "command": "grok", "args": ["agent", "stdio"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.x.ai/build/overview" }
+        { "label": "Sign in with your xAI account", "method": "acp", "command": "grok", "args": ["agent", "stdio"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.x.ai/build/overview", "install": { "page": "https://docs.x.ai/build/overview" } }
       ]
     },
     {
@@ -535,10 +599,11 @@
       "name": "Hermes Agent",
       "category": "agent",
       "description": "Terminal agent with a plugin system and resumable sessions.",
+      "websites": ["hermes-agent.nousresearch.com", "nousresearch.com"],
       "aliases": ["hermes-agent"], "evidence": { "executables": ["hermes"], "configPaths": [".hermes/config.yaml"] },
       "routes": [
         { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap hermes with a script that reads {model,messages} and prints {text}." },
-        { "label": "Connect as a coding agent", "method": "acp", "command": "hermes", "args": ["acp"], "auth": "signin", "kind": "local", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://hermes-agent.nousresearch.com/docs/user-guide/features/acp" }
+        { "label": "Connect as a coding agent", "method": "acp", "command": "hermes", "args": ["acp"], "auth": "signin", "kind": "local", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://hermes-agent.nousresearch.com/docs/user-guide/features/acp", "install": { "page": "https://hermes-agent.nousresearch.com/docs/getting-started/installation" } }
       ]
     },
     {
@@ -547,10 +612,11 @@
       "name": "Kiro CLI",
       "category": "agent",
       "description": "AWS's Kiro agent in the terminal.",
+      "websites": ["kiro.dev", "cli.kiro.dev"],
       "aliases": ["kiro"], "evidence": { "executables": ["kiro-cli"] },
       "routes": [
         { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap kiro-cli with a script that reads {model,messages} and prints {text}." },
-        { "label": "Sign in with your Kiro account", "method": "acp", "command": "kiro-cli", "args": ["acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://kiro.dev/docs/cli/acp/" }
+        { "label": "Sign in with your Kiro account", "method": "acp", "command": "kiro-cli", "args": ["acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://kiro.dev/docs/cli/acp/", "install": { "page": "https://kiro.dev/cli/" } }
       ]
     },
     {
@@ -558,6 +624,7 @@
       "name": "Letta Code",
       "category": "agent",
       "description": "Letta's terminal agent with persistent memory.",
+      "websites": ["www.letta.com", "docs.letta.com"],
       "aliases": ["letta"], "evidence": { "executables": ["letta"], "packages": ["@letta-ai/letta-code"], "configPaths": [".letta/settings.json"] },
       "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap letta with a script that reads {model,messages} and prints {text}." }]
     },
@@ -566,6 +633,7 @@
       "name": "MastraCode",
       "category": "agent",
       "description": "Mastra's terminal coding agent.",
+      "websites": ["code.mastra.ai", "mastra.ai"],
       "aliases": ["mastra code"], "evidence": { "executables": ["mastracode"], "packages": ["mastracode"] },
       "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap mastracode with a script that reads {model,messages} and prints {text}." }]
     },
@@ -574,6 +642,7 @@
       "name": "Pi",
       "category": "agent",
       "description": "Pi coding agent for the terminal, extended with TypeScript extensions.",
+      "websites": ["pi.dev"],
       "aliases": ["pi coding agent"], "evidence": { "executables": ["pi"], "packages": ["@earendil-works/pi-coding-agent"] },
       "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap pi with a script that reads {model,messages} and prints {text}." }]
     },
@@ -582,6 +651,7 @@
       "name": "Oh My Pi",
       "category": "agent",
       "description": "Pi-based terminal agent (omp).",
+      "websites": ["omp.sh"],
       "aliases": ["oh-my-pi"], "evidence": { "executables": ["omp"] },
       "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap omp with a script that reads {model,messages} and prints {text}." }]
     },
@@ -589,15 +659,21 @@
       "id": "qodercli",
       "name": "Qoder CLI",
       "category": "agent",
-      "description": "Qoder's terminal coding agent.",
-      "aliases": ["qoder"], "evidence": { "executables": ["qodercli", "qoderclicn"], "configPaths": [".qoder/settings.json"] },
-      "routes": [{ "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap qodercli with a script that reads {model,messages} and prints {text}." }]
+      "description": "Qoder's terminal coding agent. AI Hub runs it through the Agent Client Protocol with your Qoder account.",
+      "websites": ["qoder.com", "docs.qoder.com"],
+      "aliases": ["qoder"], "evidence": { "executables": ["qoder", "qodercn", "qodercli", "qoderclicn"], "configPaths": [".qoder/settings.json"] },
+      "routes": [
+        { "label": "Sign in with your Qoder account", "connectionName": "Qoder", "method": "acp", "command": "qoder", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.qoder.com/cli/cli-reference", "install": { "page": "https://docs.qoder.com/cli/installation" } },
+        { "label": "Sign in with your Qoder China account", "connectionName": "Qoder China", "method": "acp", "command": "qodercn", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.qoder.cn/cli/acp" },
+        { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap qodercli with a script that reads {model,messages} and prints {text}." }
+      ]
     },
     {
       "id": "zed",
       "name": "Zed",
       "category": "agent",
       "description": "Editor with an agent panel and MCP context servers.",
+      "websites": ["zed.dev"],
       "evidence": { "apps": ["Zed"], "executables": ["zed"], "configPaths": ["Zed/settings.json"] },
       "routes": [{ "label": "Zed is an editor", "method": "mcp", "auth": "manual", "guidance": "Zed has no chat API. Its context servers are listed separately.", "docsUrl": "https://zed.dev/docs/ai/overview" }]
     },
@@ -606,6 +682,7 @@
       "name": "Warp",
       "category": "agent",
       "description": "Terminal with built-in agents.",
+      "websites": ["www.warp.dev", "docs.warp.dev", "app.warp.dev"],
       "evidence": { "apps": ["Warp"], "executables": ["warp"] },
       "routes": [{ "label": "Warp is a terminal", "method": "api", "auth": "manual", "guidance": "Warp's agents run inside Warp. There is no local API to connect.", "docsUrl": "https://docs.warp.dev" }]
     },
@@ -633,6 +710,7 @@
       "name": "Microsoft Copilot",
       "category": "desktop",
       "description": "Microsoft's assistant app. No local API.",
+      "websites": ["copilot.microsoft.com"],
       "evidence": { "apps": ["Microsoft Copilot", "Copilot"] },
       "routes": [{ "label": "No local API", "method": "api", "auth": "manual", "guidance": "Microsoft Copilot cannot be driven from outside. Use Azure OpenAI for the same models." }]
     },
@@ -641,6 +719,7 @@
       "name": "Cherry Studio",
       "category": "desktop",
       "description": "Multi-provider desktop client.",
+      "websites": ["cherry-ai.com", "docs.cherry-ai.com", "cherryai.com.cn"],
       "evidence": { "apps": ["Cherry Studio", "CherryStudio"] },
       "routes": [{ "label": "Connect its providers directly", "method": "api", "auth": "manual", "guidance": "Cherry Studio stores provider keys in its own settings. Add the same providers here with their keys." }]
     },
@@ -649,6 +728,7 @@
       "name": "Chatbox",
       "category": "desktop",
       "description": "Multi-provider desktop client.",
+      "websites": ["chatboxai.app"],
       "evidence": { "apps": ["Chatbox", "xyz.chatboxapp.app"] },
       "routes": [{ "label": "Connect its providers directly", "method": "api", "auth": "manual", "guidance": "Chatbox stores provider keys in its own settings. Add the same providers here with their keys." }]
     },
@@ -657,6 +737,7 @@
       "name": "Msty",
       "category": "desktop",
       "description": "Local and cloud model desktop client.",
+      "websites": ["msty.ai", "msty.studio", "docs.msty.ai"],
       "evidence": { "apps": ["Msty", "Msty Studio"] },
       "routes": [{ "label": "Connect its providers directly", "method": "api", "auth": "manual", "guidance": "Msty stores provider keys in its own settings. Local models it runs can be reached through Ollama if that is installed." }]
     },
@@ -665,6 +746,7 @@
       "name": "Open WebUI",
       "category": "local-server",
       "description": "Self-hosted chat interface with an OpenAI-compatible API.",
+      "websites": ["openwebui.com", "docs.openwebui.com"],
       "evidence": { "ports": [3000, 8080], "packages": ["open-webui"], "executables": ["open-webui"] },
       "routes": [{ "label": "Connect to Open WebUI", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:3000/api", "auth": "api-key", "verified": false }]
     },
@@ -673,6 +755,7 @@
       "name": "AnythingLLM",
       "category": "local-server",
       "description": "Document chat with an OpenAI-compatible API.",
+      "websites": ["anythingllm.com", "docs.anythingllm.com"],
       "evidence": { "apps": ["AnythingLLM"], "ports": [3001] },
       "routes": [{ "label": "Connect to AnythingLLM", "method": "api", "format": "openai", "endpoint": "http://127.0.0.1:3001/api/v1/openai", "auth": "api-key", "verified": false }]
     },
@@ -681,6 +764,7 @@
       "name": "LobeHub",
       "category": "local-server",
       "description": "Self-hosted agent workspace.",
+      "websites": ["lobehub.com"],
       "evidence": { "ports": [3210] },
       "routes": [{ "label": "Connect its providers directly", "method": "api", "auth": "manual", "guidance": "LobeHub has no outbound API. Add the providers it uses here with their keys." }]
     },
@@ -689,6 +773,7 @@
       "name": "LibreChat",
       "category": "local-server",
       "description": "Self-hosted multi-provider chat.",
+      "websites": ["www.librechat.ai"],
       "evidence": { "ports": [3080] },
       "routes": [{ "label": "Connect its providers directly", "method": "api", "auth": "manual", "guidance": "LibreChat has no outbound API. Add the providers it uses here with their keys." }]
     },
@@ -697,6 +782,7 @@
       "name": "Higgsfield",
       "category": "media",
       "description": "Image, video and audio generation. Exposes an MCP server.",
+      "websites": ["higgsfield.ai"],
       "evidence": { "hosts": ["mcp.higgsfield.ai", "higgsfield.ai"], "apps": ["Higgsfield"] },
       "routes": [{ "label": "Connect the Higgsfield MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.higgsfield.ai/mcp", "auth": "oauth", "verified": false }]
     },
@@ -705,6 +791,7 @@
       "name": "HeyGen",
       "category": "media",
       "description": "Avatar video generation. Exposes an MCP server and a REST API.",
+      "websites": ["www.heygen.com", "app.heygen.com", "developers.heygen.com"],
       "evidence": { "hosts": ["mcp.heygen.com", "api.heygen.com"], "envVars": ["HEYGEN_API_KEY"] },
       "routes": [{ "label": "Connect the HeyGen MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.heygen.com/mcp/v1/", "auth": "oauth", "verified": false }]
     },
@@ -713,6 +800,7 @@
       "name": "ElevenLabs",
       "category": "media",
       "description": "Voice generation. Exposes an MCP server.",
+      "websites": ["elevenlabs.io"],
       "evidence": { "envVars": ["ELEVENLABS_API_KEY", "ELEVEN_API_KEY"], "hosts": ["api.elevenlabs.io"], "packages": ["elevenlabs", "@elevenlabs/elevenlabs-js", "elevenlabs-mcp"] },
       "routes": [{ "label": "Connect the ElevenLabs MCP server", "method": "mcp", "mcpTransport": "stdio", "command": "uvx", "args": ["elevenlabs-mcp"], "runner": "uvx", "secretEnv": "ELEVENLABS_API_KEY", "auth": "api-key", "guidance": "Give your ElevenLabs API key here; AI Hub passes it to the server as ELEVENLABS_API_KEY.", "docsUrl": "https://github.com/elevenlabs/elevenlabs-mcp", "verified": false }]
     },
@@ -721,6 +809,7 @@
       "name": "Runway",
       "category": "media",
       "description": "Video generation API.",
+      "websites": ["runway.com", "app.runwayml.com", "dev.runwayml.com", "docs.dev.runwayml.com"],
       "evidence": { "envVars": ["RUNWAYML_API_SECRET", "RUNWAY_API_KEY"], "hosts": ["api.dev.runwayml.com"] },
       "routes": [{ "label": "Needs a connector plugin", "method": "api", "auth": "manual", "guidance": "Runway's API is a job-based REST API, not a chat endpoint. A connector plugin is required.", "docsUrl": "https://docs.dev.runwayml.com" }]
     },
@@ -729,6 +818,7 @@
       "name": "Stability AI",
       "category": "media",
       "description": "Image generation API.",
+      "websites": ["stability.ai", "platform.stability.ai"],
       "evidence": { "envVars": ["STABILITY_API_KEY", "STABILITY_KEY"], "hosts": ["api.stability.ai"] },
       "routes": [{ "label": "Needs a connector plugin", "method": "api", "auth": "manual", "guidance": "Stability's API is a media REST API, not a chat endpoint. A connector plugin is required.", "docsUrl": "https://platform.stability.ai/docs" }]
     },
@@ -737,6 +827,7 @@
       "name": "fal.ai",
       "category": "media",
       "description": "Hosted media models.",
+      "websites": ["fal.ai", "docs.fal.ai"],
       "evidence": { "envVars": ["FAL_KEY", "FAL_API_KEY"], "hosts": ["fal.run", "queue.fal.run"], "packages": ["fal-client", "@fal-ai/client"] },
       "routes": [{ "label": "Needs a connector plugin", "method": "api", "auth": "manual", "guidance": "fal exposes per-model endpoints. A connector plugin is required.", "docsUrl": "https://docs.fal.ai" }]
     },
@@ -745,6 +836,7 @@
       "name": "Replicate",
       "category": "media",
       "description": "Hosted models with a prediction API.",
+      "websites": ["replicate.com", "mcp.replicate.com"],
       "evidence": { "envVars": ["REPLICATE_API_TOKEN"], "hosts": ["api.replicate.com"], "packages": ["replicate"] },
       "routes": [{ "label": "Needs a connector plugin", "method": "api", "auth": "manual", "guidance": "Replicate uses a prediction API. A connector plugin is required.", "docsUrl": "https://replicate.com/docs" }]
     },
@@ -753,6 +845,7 @@
       "name": "Midjourney",
       "category": "media",
       "description": "Image generation through Discord or the web app. No public API.",
+      "websites": ["www.midjourney.com", "docs.midjourney.com"],
       "evidence": { "apps": ["Midjourney"] },
       "routes": [{ "label": "No public API", "method": "api", "auth": "manual", "guidance": "Midjourney has no official API. Generate on the platform and import the results into Creatives." }]
     },
@@ -761,6 +854,7 @@
       "name": "Suno",
       "category": "media",
       "description": "Music generation. No public API.",
+      "websites": ["suno.com", "platform.suno.com"],
       "evidence": { "apps": ["Suno"] },
       "routes": [{ "label": "No public API", "method": "api", "auth": "manual", "guidance": "Suno has no official API. Generate on the platform and import the results into Creatives." }]
     },
@@ -778,6 +872,7 @@
       "name": "Notion MCP server",
       "category": "tools",
       "description": "Pages and databases as tools.",
+      "websites": ["www.notion.com", "developers.notion.com"],
       "evidence": { "hosts": ["mcp.notion.com"], "envVars": ["NOTION_TOKEN", "NOTION_API_KEY"] },
       "routes": [{ "label": "Connect Notion's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.notion.com/mcp", "auth": "oauth", "verified": false }]
     },
@@ -786,6 +881,7 @@
       "name": "Linear MCP server",
       "category": "tools",
       "description": "Issues and projects as tools.",
+      "websites": ["linear.app"],
       "evidence": { "hosts": ["mcp.linear.app"], "envVars": ["LINEAR_API_KEY"] },
       "routes": [{ "label": "Connect Linear's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.linear.app/mcp", "auth": "oauth", "verified": false }]
     },
@@ -794,6 +890,7 @@
       "name": "Atlassian MCP server",
       "category": "tools",
       "description": "Jira and Confluence as tools.",
+      "websites": ["www.atlassian.com", "developer.atlassian.com", "support.atlassian.com"],
       "evidence": { "hosts": ["mcp.atlassian.com"] },
       "routes": [{ "label": "Connect Atlassian's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.atlassian.com/v1/mcp", "auth": "oauth", "verified": false }]
     },
@@ -802,6 +899,7 @@
       "name": "Stripe MCP server",
       "category": "tools",
       "description": "Payments data as tools.",
+      "websites": ["stripe.com", "dashboard.stripe.com", "docs.stripe.com"],
       "evidence": { "hosts": ["mcp.stripe.com"], "envVars": ["STRIPE_SECRET_KEY"] },
       "routes": [{ "label": "Connect Stripe's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.stripe.com", "auth": "oauth", "verified": false }]
     },
@@ -810,6 +908,7 @@
       "name": "Buffer MCP server",
       "category": "tools",
       "description": "Social media scheduling as tools.",
+      "websites": ["buffer.com", "publish.buffer.com", "developers.buffer.com"],
       "evidence": { "hosts": ["mcp.buffer.com"] },
       "routes": [{ "label": "Connect Buffer's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.buffer.com/mcp", "auth": "oauth", "verified": false }]
     },
@@ -818,6 +917,7 @@
       "name": "Sentry MCP server",
       "category": "tools",
       "description": "Errors and issues as tools.",
+      "websites": ["sentry.io", "docs.sentry.io", "mcp.sentry.dev"],
       "evidence": { "hosts": ["mcp.sentry.dev"] },
       "routes": [{ "label": "Connect Sentry's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.sentry.dev/mcp", "auth": "oauth", "verified": false }]
     },
@@ -826,6 +926,7 @@
       "name": "Vercel MCP server",
       "category": "tools",
       "description": "Deployments and projects as tools.",
+      "websites": ["vercel.com"],
       "evidence": { "hosts": ["mcp.vercel.com"] },
       "routes": [{ "label": "Connect Vercel's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.vercel.com", "auth": "oauth", "verified": false }]
     },
@@ -834,6 +935,7 @@
       "name": "Context7",
       "category": "tools",
       "description": "Up-to-date library documentation as tools.",
+      "websites": ["context7.com"],
       "evidence": { "hosts": ["mcp.context7.com"], "packages": ["@upstash/context7-mcp"] },
       "routes": [{ "label": "Connect Context7", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.context7.com/mcp", "auth": "none", "verified": false }]
     },
@@ -842,6 +944,7 @@
       "name": "Playwright MCP server",
       "category": "tools",
       "description": "Browser automation as tools.",
+      "websites": ["playwright.dev"],
       "evidence": { "packages": ["@playwright/mcp"] },
       "routes": [{ "label": "Run the Playwright MCP server", "method": "mcp", "mcpTransport": "stdio", "command": "npx", "args": ["@playwright/mcp@latest"], "auth": "none", "verified": false }]
     },
@@ -858,6 +961,7 @@
       "name": "Dropbox MCP server",
       "category": "tools",
       "description": "Dropbox files as tools: browse, search, read, create, move, share links. A synced Dropbox folder also works as a project folder without any connection.",
+      "websites": ["www.dropbox.com", "help.dropbox.com"],
       "evidence": { "hosts": ["mcp.dropbox.com", "api.dropboxapi.com"], "apps": ["Dropbox"] },
       "routes": [{ "label": "Connect Dropbox's MCP server", "method": "mcp", "mcpTransport": "http", "endpoint": "https://mcp.dropbox.com/mcp", "auth": "oauth", "guidance": "Open beta. Sign in with your Dropbox account. If Dropbox refuses the sign-in from AI Hub, it needs an app created in the Dropbox App Console first.", "docsUrl": "https://help.dropbox.com/integrations/connect-dropbox-mcp-server", "verified": false }]
     },
@@ -866,6 +970,7 @@
       "name": "Google Drive MCP server",
       "category": "tools",
       "description": "Google's remote Drive server: search, read, metadata, create and download. A Google Drive folder synced to this PC also works as a project folder without any connection.",
+      "websites": ["drive.google.com"],
       "evidence": { "hosts": ["drivemcp.googleapis.com"], "apps": ["Google Drive"] },
       "routes": [{ "label": "Sign in with your own Google sign-in app", "method": "mcp", "mcpTransport": "http", "endpoint": "https://drivemcp.googleapis.com/mcp/v1", "auth": "oauth", "guidance": "Google only accepts a sign-in app from your own Google Cloud project, and its Drive server needs the Workspace Developer Preview Program. Create an OAuth client there with the callback address AI Hub shows, then press Sign in and enter its client ID when AI Hub asks.", "docsUrl": "https://developers.google.com/workspace/drive/api/guides/configure-mcp-server", "verified": false }]
     },
@@ -874,6 +979,7 @@
       "name": "OneDrive and SharePoint MCP server",
       "category": "tools",
       "description": "Microsoft's remote server for OneDrive and SharePoint files (work or school accounts). A OneDrive folder synced to this PC also works as a project folder without any connection.",
+      "websites": ["onedrive.live.com"],
       "evidence": { "hosts": ["agent365.svc.cloud.microsoft"], "apps": ["OneDrive", "Microsoft OneDrive"] },
       "routes": [{ "label": "Enter your tenant's server address", "method": "mcp", "mcpTransport": "http", "auth": "oauth", "guidance": "The address is https://agent365.svc.cloud.microsoft/agents/tenants/<tenant id>/servers/mcp_ODSPRemoteServer with your Microsoft Entra tenant id. Needs Microsoft Agent 365 with a Microsoft 365 Copilot licence, enabled by your admin. Personal OneDrive accounts are not covered by Microsoft's documentation.", "docsUrl": "https://github.com/microsoft/mcp", "verified": false }]
     },
@@ -882,6 +988,7 @@
       "name": "LangChain",
       "category": "tools",
       "description": "Application framework installed on this machine. Not a platform to connect, but a sign that provider keys exist.",
+      "websites": ["www.langchain.com", "docs.langchain.com"],
       "evidence": { "packages": ["langchain", "langchain-core", "langchain-openai", "@langchain/core"], "envVars": ["LANGCHAIN_API_KEY", "LANGSMITH_API_KEY"] },
       "routes": [{ "label": "Framework, no connection", "method": "api", "auth": "manual", "guidance": "LangChain is a library. Connect the providers it uses here directly." }]
     },
@@ -890,6 +997,7 @@
       "name": "MCP SDK",
       "category": "tools",
       "description": "Model Context Protocol SDK installed on this machine. Local MCP servers may exist in projects.",
+      "websites": ["py.sdk.modelcontextprotocol.io"],
       "evidence": { "packages": ["mcp", "@modelcontextprotocol/sdk", "fastmcp"] },
       "routes": [{ "label": "SDK, no connection", "method": "mcp", "auth": "manual", "guidance": "This is a library. Local MCP servers built with it can be added with the MCP route and their command." }]
     }
