@@ -116,3 +116,22 @@ func TestHubDownAnswers502(t *testing.T) {
 		t.Fatalf("unexpected body %q", rec.Body.String())
 	}
 }
+
+// The hub limits wrong phone passwords per device (2026-10-13 security audit),
+// so the device is the connection's own address, never a header the client sent.
+func TestPeerAddressComesFromTheConnection(t *testing.T) {
+	hub, seen := upstream(t)
+	h := handlerFor(t, hub.URL)
+	req := httptest.NewRequest("POST", "/api/phone/login", strings.NewReader("{}"))
+	req.Host = "ai-hub.tail0000.ts.net"
+	req.RemoteAddr = "100.101.102.103:51234"
+	req.Header.Set("X-AI-Hub-Phone-Peer", "forged")
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+	if rec.Code != 200 {
+		t.Fatalf("expected the hub's answer, got %d", rec.Code)
+	}
+	if got := seen.Header.Values("X-AI-Hub-Phone-Peer"); len(got) != 1 || got[0] != "100.101.102.103" {
+		t.Fatalf("peer header not taken from the connection: %q", got)
+	}
+}

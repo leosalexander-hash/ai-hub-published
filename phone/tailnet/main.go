@@ -48,6 +48,11 @@ const markerHeader = "X-AI-Hub-Phone"
 // The hub's bridge header (server/app.ts): never forwarded from a phone.
 const bridgeHeader = "X-AI-Hub-Run"
 
+// peerHeader tells the hub which device a request came from (the connection's
+// own address), so wrong passwords are limited per device and a stranger
+// cannot lock the owner's phone out. Any copy a client sends is replaced.
+const peerHeader = "X-AI-Hub-Phone-Peer"
+
 // adminDNS is where the user switches on MagicDNS and HTTPS certificates.
 const adminDNS = "https://login.tailscale.com/admin/dns"
 
@@ -396,6 +401,12 @@ func proxyHandler(c config, address string) http.Handler {
 			pr.Out.Header.Del(markerHeader)
 			pr.Out.Header.Del(bridgeHeader)
 			pr.Out.Header.Set(markerHeader, c.marker)
+			peer, _, err := net.SplitHostPort(pr.In.RemoteAddr)
+			if err != nil {
+				peer = pr.In.RemoteAddr
+			}
+			pr.Out.Header.Del(peerHeader)
+			pr.Out.Header.Set(peerHeader, peer)
 			pr.Out.Header.Set("X-Forwarded-Proto", "https")
 			pr.Out.Header.Set("X-Forwarded-Host", strings.TrimPrefix(address, "https://"))
 			if pr.In.Header.Get("Origin") != "" {
