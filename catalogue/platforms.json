@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-04.2",
+  "version": "2026-10-20",
   "note": "Known AI platforms with the evidence that reveals them on a machine and the route to connect each one. Adding a platform is a change to this file. Routes with verified=false are written from vendor documentation and have not been exercised through AI Hub yet; the card says so. Values of keys are never read by the scanner; only variable names.",
   "vendors": [
     { "id": "anthropic", "name": "Claude", "company": "Anthropic" },
@@ -78,6 +78,7 @@
       "category": "agent",
       "description": "Moonshot AI's coding agent. AI Hub runs its command-line program through the Agent Client Protocol, signed in with your Kimi account (free or subscription).",
       "websites": ["code.kimi.com"],
+      "installFolders": {"win32": ["{HOME}/.kimi-code/bin"]},
       "evidence": { "apps": ["Kimi Code"], "executables": ["kimi", "kimi-code"], "packages": ["@moonshot-ai/kimi-code", "kimi-code", "kimi-cli"], "configPaths": [".kimi-code/config.toml"] },
       "routes": [
         { "label": "Sign in to Kimi International", "connectionName": "Kimi International", "method": "acp", "command": "kimi", "args": ["acp", "--region", "global"], "homeEnv": "KIMI_CODE_HOME", "auth": "signin", "verified": false, "guidance": "Needs Kimi Code's command-line program (kimi), which the scan did not find. Install it with Moonshot's installer from the Kimi Code guide, then scan again.", "docsUrl": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html", "install": { "npm": "@moonshot-ai/kimi-code", "page": "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/getting-started.html" } },
@@ -396,6 +397,7 @@
       "name": "Claude Code",
       "category": "agent",
       "description": "Anthropic's coding agent. AI Hub runs it through the Agent SDK with your Claude subscription.",
+      "installFolders": {"win32": ["{HOME}/.local/bin"], "darwin": ["{HOME}/.local/bin"], "linux": ["{HOME}/.local/bin"]},
       "evidence": { "executables": ["claude"], "packages": ["@anthropic-ai/claude-code"], "configPaths": [".claude.json", ".claude/settings.json"] },
       "routes": [{ "label": "Sign in with your Claude subscription", "method": "claude-code", "auth": "signin", "verified": true, "install": { "page": "https://code.claude.com/docs/en/setup" } }]
     },
@@ -415,7 +417,7 @@
       "category": "agent",
       "description": "Google's coding agent in the terminal. AI Hub runs it through the Agent Client Protocol.",
       "evidence": { "executables": ["gemini"], "packages": ["@google/gemini-cli"], "configPaths": [".gemini/settings.json"] },
-      "routes": [{ "label": "Sign in with your Google account in Gemini CLI", "connectionName": "Gemini CLI", "method": "acp", "command": "gemini", "args": ["--acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://geminicli.com/docs/cli/acp-mode/", "install": { "npm": "@google/gemini-cli", "page": "https://geminicli.com/docs/get-started/installation/" } }]
+      "routes": [{ "label": "Sign in with your Google account in Gemini CLI", "connectionName": "Gemini CLI", "method": "acp", "command": "gemini", "args": ["--acp"], "auth": "signin", "verified": false, "refused": "Google no longer allows this sign-in for personal Google accounts. Use Antigravity instead, on this same card.", "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://geminicli.com/docs/cli/acp-mode/", "install": { "npm": "@google/gemini-cli", "page": "https://geminicli.com/docs/get-started/installation/" } }]
     },
     {
       "id": "copilot-cli",
@@ -441,6 +443,7 @@
       "category": "agent",
       "description": "Open-source coding agent with a terminal UI and headless mode.",
       "websites": ["opencode.ai"],
+      "installFolders": {"darwin": ["{HOME}/.opencode/bin"], "linux": ["{HOME}/.opencode/bin"]},
       "evidence": { "executables": ["opencode"], "packages": ["opencode-ai"], "configPaths": [".config/opencode/opencode.json"], "apps": ["OpenCode"] },
       "routes": [
         { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Run OpenCode in non-interactive mode through a wrapper that reads {model,messages} and prints {text}.", "docsUrl": "https://opencode.ai/docs/" },
@@ -453,6 +456,7 @@
       "category": "agent",
       "description": "Block's open-source agent with MCP extensions.",
       "websites": ["goose-docs.ai"],
+      "installFolders": {"win32": ["{HOME}/goose"], "darwin": ["{HOME}/.local/bin"], "linux": ["{HOME}/.local/bin"]},
       "evidence": { "executables": ["goose"], "apps": ["Goose"], "configPaths": ["Block/goose/config/config.yaml"] },
       "routes": [
         { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Goose supports headless runs. Wrap it with a script that reads {model,messages} and prints {text}.", "docsUrl": "https://block.github.io/goose/" },
@@ -465,6 +469,7 @@
       "category": "agent",
       "description": "AI code editor with a terminal agent. AI Hub runs the agent through the Agent Client Protocol; the MCP servers configured in Cursor are listed separately.",
       "websites": ["cursor.com"],
+      "installFolders": {"win32": ["{LOCALAPPDATA}/cursor-agent"], "darwin": ["{HOME}/.local/bin"], "linux": ["{HOME}/.local/bin"]},
       "evidence": { "apps": ["Cursor"], "executables": ["cursor", "cursor-agent", "agent"], "configPaths": [".cursor/mcp.json"] },
       "routes": [{ "label": "Sign in with your Cursor account", "method": "acp", "command": "agent", "args": ["acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://cursor.com/docs/cli/acp", "install": { "page": "https://cursor.com/docs/cli/installation" } }]
     },
@@ -542,6 +547,7 @@
       "category": "agent",
       "description": "Google's Antigravity agent in the terminal (agy). AI Hub drives it in its headless mode with your Google account.",
       "websites": ["antigravity.google"],
+      "installFolders": {"win32": ["{LOCALAPPDATA}/agy/bin"], "darwin": ["{HOME}/.local/bin"], "linux": ["{HOME}/.local/bin"]},
       "aliases": ["antigravity", "agy"], "evidence": { "executables": ["agy"] },
       "routes": [
         { "label": "Sign in with your Google account in Antigravity", "connectionName": "Antigravity", "method": "headless", "command": "agy", "auth": "signin", "verified": false, "guidance": "Needs Antigravity's command-line program, which the scan did not find. Install it with the page linked here, then scan again.", "docsUrl": "https://antigravity.google/docs/cli/headless/", "install": { "page": "https://antigravity.google/docs/cli/install/" },
@@ -564,6 +570,7 @@
       "category": "agent",
       "description": "Cognition's Devin agent in the terminal. AI Hub runs it through the Agent Client Protocol with your Devin account.",
       "websites": ["cli.devin.ai"],
+      "installFolders": {"win32": ["{LOCALAPPDATA}/devin/cli/bin"], "darwin": ["{HOME}/.local/bin"], "linux": ["{HOME}/.local/bin"]},
       "aliases": ["devin"], "evidence": { "executables": ["devin"], "configPaths": [".config/devin/config.json", "devin/config.json"] },
       "routes": [
         { "label": "Sign in with your Devin account", "method": "acp", "command": "devin", "args": ["acp"], "auth": "signin", "verified": false, "guidance": "Needs this agent's command-line program, which the scan did not find. Install it with the guide linked here, then scan again.", "docsUrl": "https://docs.devin.ai/cli/reference/commands", "install": { "page": "https://docs.devin.ai/cli" } },
@@ -588,6 +595,7 @@
       "name": "Grok Build",
       "category": "agent",
       "description": "xAI's Grok agent in the terminal.",
+      "installFolders": {"win32": ["{HOME}/.grok/bin"], "darwin": ["{HOME}/.grok/bin"], "linux": ["{HOME}/.grok/bin"]},
       "evidence": { "executables": ["grok"], "configPaths": [".grok/config.toml"] },
       "routes": [
         { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap grok with a script that reads {model,messages} and prints {text}." },
@@ -600,6 +608,7 @@
       "category": "agent",
       "description": "Terminal agent with a plugin system and resumable sessions.",
       "websites": ["hermes-agent.nousresearch.com", "nousresearch.com"],
+      "installFolders": {"win32": ["{LOCALAPPDATA}/hermes/bin"], "darwin": ["{HOME}/.local/bin"], "linux": ["{HOME}/.local/bin"]},
       "aliases": ["hermes-agent"], "evidence": { "executables": ["hermes"], "configPaths": [".hermes/config.yaml"] },
       "routes": [
         { "label": "Use as a CLI bridge", "method": "cli", "auth": "manual", "guidance": "Wrap hermes with a script that reads {model,messages} and prints {text}." },
